@@ -4,9 +4,12 @@ import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/ut
 import CONSTANT from '@/utils/CONSTANTS';
 
 import styles from './index.less';
+import CONSTANTS from '@/utils/CONSTANTS';
+import TargetBox from '../../TargetBox';
 
 const InfiniteCanvas = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [dragState, setDragState] = useState({ x: 0, y: 0 });
   const [diffmove, setDiffMove] = useState({
     start: { x: 0, y: 0 },
     move: false,
@@ -42,12 +45,12 @@ const InfiniteCanvas = () => {
           },
           move: true,
         });
-        // setDragState((prev) => {
-        //   return {
-        //     x: prev.x + diffx,
-        //     y: prev.y + diffy,
-        //   };
-        // });
+        setDragState((prev) => {
+          return {
+            x: prev.x + diffx,
+            y: prev.y + diffy,
+          };
+        });
       }
     };
   }, [diffmove.move, diffmove.start.x, diffmove.start.y]);
@@ -64,15 +67,15 @@ const InfiniteCanvas = () => {
   const onwheelFn = useMemo(() => {
     return (e: React.WheelEvent<HTMLDivElement>) => {
       if (e.deltaY < 0) {
-        //   setDragState((prev) => ({
-        //     x: prev.x,
-        //     y: prev.y + 40,
-        //   }));
-        // } else {
-        //   setDragState((prev) => ({
-        //     x: prev.x,
-        //     y: prev.y - 40,
-        //   }));
+        setDragState((prev) => ({
+          x: prev.x,
+          y: prev.y + 40,
+        }));
+      } else {
+        setDragState((prev) => ({
+          x: prev.x,
+          y: prev.y - 40,
+        }));
       }
     };
   }, []);
@@ -107,6 +110,13 @@ const InfiniteCanvas = () => {
       {/* 画布 */}
 
       <div>
+        <TargetBox
+          dragState={dragState}
+          setDragState={setDragState}
+          scaleNum={CONSTANTS.CANVAS_SCALE_NUM}
+          canvasId={'canvas_js'}
+          allType={[]}
+        />
         {/* {canvasPanels.map((panel, i) => {
         if (panel === canvasId) {
           return (
