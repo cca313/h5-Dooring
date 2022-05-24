@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Result, Tabs } from 'antd';
+import { connect } from 'dva';
+import { Button, Result, Tabs } from 'antd';
 import {
   PieChartOutlined,
   PlayCircleOutlined,
@@ -7,17 +8,21 @@ import {
   DoubleRightOutlined,
   DoubleLeftOutlined,
 } from '@ant-design/icons';
-import { connect } from 'dva';
+import dooringCompt from 'dooringUI/components';
+import { ActionCreators, StateWithHistory } from 'redux-undo';
+
+import { FormRender } from '@/core';
 import HeaderComponent from './components/Header';
-import CanvasControl from './components/CanvasControl';
+// import CanvasControl from './components/CanvasControl';
+import CanvasTabs from './components/CanvasTabs';
 import SourceBox from './TargetBox';
 import TargetBox from './SourceBox';
 import Calibration from 'components/Calibration';
-import { FormRender } from '@/core';
-import dooringCompt from 'dooringUI/components';
-import { ActionCreators, StateWithHistory } from 'redux-undo';
 import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/utils/tool';
+
 import styles from './index.less';
+import ModalBox from './ModalBox';
+
 const { TabPane } = Tabs;
 const { template, mediaTpl, graphTpl, shopTpl, schemaH5 } = dooringCompt;
 const DynamicEngine = React.lazy(() => import('dooringUI/loader'));
@@ -29,9 +34,12 @@ const Container = (props: {
   cstate?: any;
   dispatch?: any;
 }) => {
+  const canvasId = 'default_canvas';
   const [scaleNum, setScale] = useState(1);
   const [collapsed, setCollapsed] = useState(false);
   const [rightColla, setRightColla] = useState(true);
+  const [canvasPanels, setCanvasPanels] = useState([canvasId]);
+  const [activeCanvas, setActiveCanvas] = useState('default_canvas');
   const { pstate, cstate, dispatch } = props;
   const pointData = pstate ? pstate.pointData : [];
   const cpointData = cstate ? cstate.pointData : [];
@@ -49,12 +57,11 @@ const Container = (props: {
   const curPoint = pstate ? pstate.curPoint : {};
 
   // 指定画布的id
-  let canvasId = 'js_canvas';
 
-  const backSize = () => {
-    setScale(1);
-    setDragState({ x: 0, y: 0 });
-  };
+  // const backSize = () => {
+  //   setScale(1);
+  //   setDragState({ x: 0, y: 0 });
+  // };
 
   const CpIcon = {
     base: <HighlightOutlined />,
@@ -123,13 +130,13 @@ const Container = (props: {
     });
   };
 
-  useEffect(() => {
-    // note (@livs-ops): 检测当前浏览器是否处于手机模式下
-    if (detectMobileBrowser(getBrowserNavigatorMetaInfo())) {
-      props.history.push('/mobileTip');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   // note (@livs-ops): 检测当前浏览器是否处于手机模式下
+  //   if (detectMobileBrowser(getBrowserNavigatorMetaInfo())) {
+  //     props.history.push('/mobileTip');
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     if (pstate.curPoint && pstate.curPoint.status === 'inToCanvas') {
@@ -154,7 +161,8 @@ const Container = (props: {
     return arr;
   }, [graphTpl, mediaTpl, template]);
 
-  const [dragstate, setDragState] = useState({ x: 0, y: 0 });
+  // const [dragstate, setDragState] = useState({ x: 0, y: 0 });
+  // const [dragModalstate, setModalDragState] = useState({ x: 0, y: 0 });
 
   const ref = useRef<HTMLDivElement>(null);
   const renderRight = useMemo(() => {
@@ -188,6 +196,7 @@ const Container = (props: {
     );
   }, [cpointData.length, curPoint, handleDel, handleFormSave, pointData.length, rightColla]);
 
+  /* 渲染函数-左侧组件分类tab */
   const tabRender = useMemo(() => {
     if (collapsed) {
       return (
@@ -311,12 +320,12 @@ const Container = (props: {
           },
           move: true,
         });
-        setDragState(prev => {
-          return {
-            x: prev.x + diffx,
-            y: prev.y + diffy,
-          };
-        });
+        // setDragState((prev) => {
+        //   return {
+        //     x: prev.x + diffx,
+        //     y: prev.y + diffy,
+        //   };
+        // });
       }
     };
   }, [diffmove.move, diffmove.start.x, diffmove.start.y]);
@@ -333,19 +342,20 @@ const Container = (props: {
   const onwheelFn = useMemo(() => {
     return (e: React.WheelEvent<HTMLDivElement>) => {
       if (e.deltaY < 0) {
-        setDragState(prev => ({
-          x: prev.x,
-          y: prev.y + 40,
-        }));
-      } else {
-        setDragState(prev => ({
-          x: prev.x,
-          y: prev.y - 40,
-        }));
+        //   setDragState((prev) => ({
+        //     x: prev.x,
+        //     y: prev.y + 40,
+        //   }));
+        // } else {
+        //   setDragState((prev) => ({
+        //     x: prev.x,
+        //     y: prev.y - 40,
+        //   }));
       }
     };
   }, []);
 
+  // 画布区域的鼠标指针图标
   useEffect(() => {
     if (diffmove.move && containerRef.current) {
       containerRef.current.style.cursor = 'move';
@@ -393,13 +403,13 @@ const Container = (props: {
             {collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
           </div>
         </div>
+        <CanvasTabs allType={allType} />
         <div
           style={{
             width: collapsed ? '50px' : '350px',
             transition: 'all ease-in-out 0.5s',
           }}
         ></div>
-
         <div
           className={styles.tickMark}
           id="calibration"
@@ -410,21 +420,44 @@ const Container = (props: {
           onMouseLeave={mouseupfn}
           onWheel={onwheelFn}
         >
+          {/* 刻度尺 */}
           <div className={styles.tickMarkTop}>
             <Calibration direction="up" id="calibrationUp" multiple={scaleNum} />
           </div>
+          {/* 刻度尺 */}
           <div className={styles.tickMarkLeft}>
             <Calibration direction="right" id="calibrationRight" multiple={scaleNum} />
           </div>
-          <SourceBox
-            dragState={dragstate}
-            setDragState={setDragState}
-            scaleNum={scaleNum}
-            canvasId={canvasId}
-            allType={allType}
-          />
-          <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} />
+          {/* 画布 */}
+
+          <div>
+            {/* {canvasPanels.map((panel, i) => {
+              if (panel === canvasId) {
+                return (
+                  <SourceBox
+                    dragState={dragstate}
+                    setDragState={setDragState}
+                    scaleNum={scaleNum}
+                    canvasId={canvasId}
+                    allType={allType}
+                  />
+                );
+              } else {
+                <ModalBox
+                  dragState={dragModalstate}
+                  setDragState={setModalDragState}
+                  scaleNum={scaleNum}
+                  canvasId={`modal-canvas-${i}`}
+                  allType={allType}
+                />;
+              }
+            })} */}
+            {/* 切换画布 */}
+          </div>
+          {/* 快捷键浮窗 */}
+          {/* <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} /> */}
         </div>
+        {/* 右侧面板 */}
         {renderRight}
         <div
           className={styles.rightcolla}

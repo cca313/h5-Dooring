@@ -54,8 +54,12 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
     //       : `/preview?tid=${props.location.query.tid}`,
     //   );
     // }, 600);
-     setTimeout(() => {
-      window.open(`http://localhost:8008/preview?tid=${props.location.query.tid}&pointData=${encodeURI(JSON.stringify(pointData))}`);
+    setTimeout(() => {
+      window.open(
+        `http://localhost:8008/preview?tid=${props.location.query.tid}&pointData=${encodeURI(
+          JSON.stringify(pointData),
+        )}`,
+      );
     }, 600);
   };
 
@@ -70,7 +74,11 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
   const content = () => {
     const { tid } = location.query || '';
     return (
-      <QRCode value={`${window.location.protocol}//http://localhost:8008/preview?tid=${props.location.query.tid}&pointData=${JSON.stringify(pointData)}`} />
+      <QRCode
+        value={`${window.location.protocol}//http://localhost:8008/preview?tid=${
+          props.location.query.tid
+        }&pointData=${JSON.stringify(pointData)}`}
+      />
     );
   };
 
@@ -111,7 +119,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
       cancelText: '取消',
       onOk() {
         let name = iptRef.current!.state.value;
-        req.post('/visible/tpl/save', { name, tpl: pointData }).then(res => {
+        req.post('/visible/tpl/save', { name, tpl: pointData }).then((res) => {
           console.log(res);
         });
       },
@@ -205,7 +213,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
       beforeUpload(file: File) {
         // 解析并提取excel数据
         let reader = new FileReader();
-        reader.onload = function(e: Event) {
+        reader.onload = function (e: Event) {
           let data = (e as any).target.result;
           importTpl && importTpl(JSON.parse(data));
         };
@@ -233,19 +241,19 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         <div className={styles.backBtn} onClick={toBack}>
           <ArrowLeftOutlined />
         </div>
-        <div className={styles.logo} title="Dooring">
+        {/* <div className={styles.logo} title="Dooring">
           <a href="/">
             <img src="http://cdn.dooring.cn/dr/logo.ff7fc6bb.png" alt="Dooring-强大的h5编辑器" />
           </a>
-        </div>
-        <a href="http://h5.dooring.cn/h5_plus" target="_blank" className={styles.goPro}>
+        </div> */}
+        {/* <a href="http://h5.dooring.cn/h5_plus" target="_blank" className={styles.goPro}>
           前往专业版
-        </a>
+        </a> */}
       </div>
       <div className={styles.controlArea}>
-        <Button type="primary" style={{ marginRight: '9px' }} onClick={useTemplate}>
+        {/* <Button type="primary" style={{ marginRight: '9px' }} onClick={useTemplate}>
           模版库
-        </Button>
+        </Button> */}
         <Button
           type="link"
           style={{ marginRight: '9px' }}
@@ -254,20 +262,20 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         >
           保存模版
         </Button>
-        <Upload {...uploadprops}>
+        {/* <Upload {...uploadprops}>
           <Button type="link" style={{ marginRight: '8px' }}>
             <UploadOutlined />
           </Button>
-        </Upload>
-        <Button
+        </Upload> */}
+        {/* <Button
           type="link"
           style={{ marginRight: '9px' }}
           onClick={handleSaveCode}
           disabled={!pointData.length}
         >
           <DownloadOutlined />
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           type="link"
           style={{ marginRight: '9px' }}
           title="下载json文件"
@@ -284,7 +292,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           disabled={!pointData.length}
         >
           <FileAddOutlined />
-        </Button>
+        </Button> */}
         <MyPopover content={content()} directions="BOTTOM">
           <Button
             type="link"
@@ -331,7 +339,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         <Button type="link" onClick={toPreview} disabled={!pointData.length}>
           预览
         </Button>
-        <Button
+        {/* <Button
           type="link"
           style={{ marginRight: '5px' }}
           title="一键分享"
@@ -339,8 +347,8 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           disabled={!pointData.length}
         >
           <WechatOutlined />
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           type="link"
           style={{ marginRight: '9px' }}
           onClick={toHelp}
@@ -348,9 +356,9 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           title="使用帮助"
         >
           帮助
-        </Button>
+        </Button> */}
       </div>
-      <div className={styles.btnArea}>
+      {/* <div className={styles.btnArea}>
         <Button type="primary" ghost onClick={toOnlineCoding} style={{ marginRight: '12px' }}>
           <CodeOutlined />
           在线编程
@@ -359,7 +367,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           <SketchOutlined />
           会员登录
         </Button>
-      </div>
+      </div> */}
       <Modal
         title="生成封面中...(长时间未反应请点右侧按钮重试)"
         visible={showModalIframe}

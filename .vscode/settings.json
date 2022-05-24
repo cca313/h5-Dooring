@@ -5,5 +5,8 @@
     "titleBar.activeForeground": "#FBFCFE"
   },
   "editor.snippetSuggestions": "bottom",
-  "editor.suggest.snippetsPreventQuickSuggestions": false
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "typescript.tsdk": "E:\\projects\\legao\\packages\\editor\\node_modules\\typescript\\lib",
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": false
 }

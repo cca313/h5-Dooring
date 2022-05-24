@@ -47,7 +47,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
       // 转换成网格规则的坐标和大小
       let gridY = Math.ceil(y / cellHeight);
       dispatch({
-        type: 'editorModal/addPointData',
+        type: 'modal/addPointData',
         payload: {
           id: uuid(6, 10),
           item,
@@ -67,7 +67,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
     return (layout, oldItem, newItem, placeholder, e, element) => {
       const curPointData = pointData.filter((item) => item.id === newItem.i)[0];
       dispatch({
-        type: 'editorModal/modPointData',
+        type: 'modal/modPointData',
         payload: { ...curPointData, point: newItem, status: 'inToCanvas' },
       });
     };
@@ -77,7 +77,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
     return (layout, oldItem, newItem, placeholder, e, element) => {
       const curPointData = pointData.filter((item) => item.id === newItem.i)[0];
       dispatch({
-        type: 'editorModal/modPointData',
+        type: 'modal/modPointData',
         payload: { ...curPointData, status: 'inToCanvas' },
       });
     };
@@ -87,7 +87,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
     return (layout, oldItem, newItem, placeholder, e, element) => {
       const curPointData = pointData.filter((item) => item.id === newItem.i)[0];
       dispatch({
-        type: 'editorModal/modPointData',
+        type: 'modal/modPointData',
         payload: { ...curPointData, point: newItem, status: 'inToCanvas' },
       });
     };
@@ -96,7 +96,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
   const handleContextMenuDel = () => {
     if (pstate.curPoint) {
       dispatch({
-        type: 'editorModal/delPointData',
+        type: 'modal/delPointData',
         payload: { id: pstate.curPoint.id },
       });
     }
@@ -105,7 +105,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
   const handleContextMenuCopy = () => {
     if (pstate.curPoint) {
       dispatch({
-        type: 'editorModal/copyPointData',
+        type: 'modal/copyPointData',
         payload: { id: pstate.curPoint.id },
       });
     }

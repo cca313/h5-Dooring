@@ -32,7 +32,7 @@ export default function Layout({ children }: IRouteComponentProps) {
       let returnValue = generateRespones(v);
       if (returnValue) {
         //排除null
-        setList(prev => [...prev, { isUser: false, text: returnValue }]);
+        setList((prev) => [...prev, { isUser: false, text: returnValue }]);
       }
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,7 +158,7 @@ export default function Layout({ children }: IRouteComponentProps) {
       </div>
       {render}
       {children}
-      {window.location.pathname.indexOf('editor') > -1 && (
+      {/* {window.location.pathname.indexOf('editor') > -1 && (
         <Draggable>
           <div className={styles.dragPay}>
             <div className={styles.crouseBtn}>搭建技巧(可拖动)</div>
@@ -167,7 +167,7 @@ export default function Layout({ children }: IRouteComponentProps) {
             </div>
           </div>
         </Draggable>
-      )}
+      )} */}
     </div>
   );
 }
