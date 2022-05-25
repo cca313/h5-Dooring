@@ -1,19 +1,28 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'umi';
 import Calibration from 'components/Calibration';
 import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/utils/tool';
-import CONSTANT from '@/utils/CONSTANTS';
 
-import styles from './index.less';
 import CONSTANTS from '@/utils/CONSTANTS';
 import TargetBox from '../../TargetBox';
 
-const InfiniteCanvas = () => {
+import styles from '../../index.less';
+import ModalBox from '../../ModalBox';
+
+interface ICanvasProps {
+  accepts: string[];
+  activeCanvas: string | number;
+}
+
+const InfiniteCanvas = (props: ICanvasProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { accepts, activeCanvas } = props;
   const [dragState, setDragState] = useState({ x: 0, y: 0 });
   const [diffmove, setDiffMove] = useState({
     start: { x: 0, y: 0 },
     move: false,
   });
+  const modals = useSelector((state: any) => state.present.modal.modals);
 
   const mousedownfn = useMemo(() => {
     return (e: React.MouseEvent<HTMLDivElement>) => {
@@ -101,22 +110,42 @@ const InfiniteCanvas = () => {
     >
       {/* 刻度尺 */}
       <div className={styles.tickMarkTop}>
-        <Calibration direction="up" id="calibrationUp" multiple={CONSTANT.CANVAS_SCALE_NUM} />
+        <Calibration direction="up" id="calibrationUp" multiple={CONSTANTS.CANVAS_SCALE_NUM} />
       </div>
       {/* 刻度尺 */}
       <div className={styles.tickMarkLeft}>
-        <Calibration direction="right" id="calibrationRight" multiple={CONSTANT.CANVAS_SCALE_NUM} />
+        <Calibration
+          direction="right"
+          id="calibrationRight"
+          multiple={CONSTANTS.CANVAS_SCALE_NUM}
+        />
       </div>
       {/* 画布 */}
 
       <div>
-        <TargetBox
-          dragState={dragState}
-          setDragState={setDragState}
-          scaleNum={CONSTANTS.CANVAS_SCALE_NUM}
-          canvasId={'canvas_js'}
-          allType={[]}
-        />
+        {activeCanvas == 'default_canvas' && (
+          <TargetBox
+            dragState={dragState}
+            setDragState={setDragState}
+            scaleNum={CONSTANTS.CANVAS_SCALE_NUM}
+            canvasId={'default_canvas'}
+            allType={accepts}
+          />
+        )}
+        {modals.map((modal: any, i: any) => {
+          console.log(modal.id, activeCanvas);
+          return (
+            activeCanvas == modal.id && (
+              <ModalBox
+                dragState={dragState}
+                setDragState={setDragState}
+                scaleNum={CONSTANTS.CANVAS_SCALE_NUM}
+                canvasId={modal.id}
+                allType={accepts}
+              />
+            )
+          );
+        })}
         {/* {canvasPanels.map((panel, i) => {
         if (panel === canvasId) {
           return (

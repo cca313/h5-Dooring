@@ -5,35 +5,28 @@ import CONSTANTS from '@/utils/CONSTANTS';
 import styles from './index.less';
 import ModalBox from '../../ModalBox';
 import { PlusOutlined } from '@ant-design/icons';
+import { useSelector } from 'umi';
 
 const { TabPane } = Tabs;
 
-interface ICanvasSwitcherProps {
+interface ICanvasTabsProps {
   // activeCanvas: string;
-  allType: string[];
+  // allType: string[];
+  setModalVisible: (visible: boolean) => void;
+  activeCanvas: string;
+  setActiveCanvas: (idx: any) => void;
 }
 
-const CanvasSwitcher = (props: ICanvasSwitcherProps) => {
-  const { allType } = props;
-  const [isModalVisible, setModalShow] = useState(false);
-  const [form] = Form.useForm();
-  const handleAddModal = () => {
-    setModalShow(true);
+const CanvasSwitcher = (props: ICanvasTabsProps) => {
+  const { setModalVisible, activeCanvas, setActiveCanvas } = props;
+  const modalTabs = useSelector((state: any) => state.present.modal.modals);
+  console.log(modalTabs);
+  const handleBtnAddClick = () => {
+    setModalVisible(true);
   };
-  const handleModalConfirm = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        console.log(values);
-        // form.resetFields();
-        // onCreate(values);
-      })
-      .catch((info) => {
-        console.log('Validate Failed:', info);
-      });
-  };
-  const handleModalCancel = () => {
-    setModalShow(false);
+  const handleBtnTabClick = (id: string) => {
+    if (id === activeCanvas) return;
+    setActiveCanvas(id);
   };
   return (
     <div className={styles.buttonsBox}>
@@ -66,34 +59,29 @@ const CanvasSwitcher = (props: ICanvasSwitcherProps) => {
         ))}
       </Tabs> */}
       <span className={styles.title}>弹窗设置</span>
-      <Button icon={<PlusOutlined />} onClick={handleAddModal}>
+      <Button icon={<PlusOutlined />} onClick={handleBtnAddClick}>
         新增
       </Button>
       <Divider className={styles.divider} />
-      <Button type="primary">默认页面</Button>
-      <Modal
-        title="新增弹窗"
-        okText="确认"
-        cancelText="取消"
-        visible={isModalVisible}
-        onOk={handleModalConfirm}
-        onCancel={handleModalCancel}
+      <Button
+        className={styles.gap}
+        type={activeCanvas == 'default_canvas' ? 'primary' : 'default'}
+        onClick={() => handleBtnTabClick('default_canvas')}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          name="form_in_modal"
-          initialValues={{ modifier: 'public' }}
-        >
-          <Form.Item
-            name="name"
-            label="弹窗名称"
-            rules={[{ required: true, message: '请输入弹窗名称' }]}
-          >
-            <Input />
-          </Form.Item>
-        </Form>
-      </Modal>
+        默认页面
+      </Button>
+      {modalTabs.length > 0 &&
+        modalTabs.map((modal: any) => {
+          return (
+            <Button
+              className={styles.gap}
+              type={activeCanvas == modal.id ? 'primary' : 'default'}
+              onClick={() => handleBtnTabClick(modal.id)}
+            >
+              {modal.config.name}
+            </Button>
+          );
+        })}
     </div>
   );
 };

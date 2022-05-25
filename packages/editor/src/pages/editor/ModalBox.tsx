@@ -4,18 +4,20 @@ import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { ItemCallback } from 'react-grid-layout';
 import { Menu, Item, MenuProvider } from 'react-contexify';
 import { connect } from 'dva';
-import { Dispatch } from 'umi';
+import { useDispatch } from 'umi';
 import { StateWithHistory } from 'redux-undo';
 import { uuid } from '@/utils/tool';
+
 import styles from './index.less';
 import 'react-contexify/dist/ReactContexify.min.css';
+
 interface SourceBoxProps {
   pstate: { pointData: { id: string; item: any; point: any; isMenu?: any }[]; curPoint: any };
   cstate: { pointData: { id: string; item: any; point: any }[]; curPoint: any };
   scaleNum: number;
   canvasId: string;
   allType: string[];
-  dispatch: Dispatch;
+  // dispatch: Dispatch;
   dragState: { x: number; y: number };
   setDragState: React.Dispatch<
     React.SetStateAction<{
@@ -26,13 +28,14 @@ interface SourceBoxProps {
 }
 const ViewRender = React.lazy(() => import('dooringUI/viewRender'));
 const TargetBox = memo((props: SourceBoxProps) => {
-  const { pstate, scaleNum, canvasId, allType, dispatch, dragState, setDragState, cstate } = props;
+  const { pstate, scaleNum, canvasId, allType, dragState, setDragState, cstate } = props;
 
   let pointData = pstate ? pstate.pointData : [];
   const cpointData = cstate ? cstate.pointData : [];
 
   const [canvasRect, setCanvasRect] = useState<number[]>([]);
   const [isShowTip, setIsShowTip] = useState(true);
+  const dispatch = useDispatch();
   const [{ isOver }, drop] = useDrop({
     accept: allType,
     drop: (item: { h: number; type: string; x: number }, monitor) => {
@@ -47,9 +50,10 @@ const TargetBox = memo((props: SourceBoxProps) => {
       // 转换成网格规则的坐标和大小
       let gridY = Math.ceil(y / cellHeight);
       dispatch({
-        type: 'modal/addPointData',
+        type: 'modal/addDragItem',
         payload: {
-          id: uuid(6, 10),
+          // id: uuid(6, 10),
+          id: canvasId,
           item,
           point: { i: `x-${pointData.length}`, x: 0, y: gridY, w, h: item.h, isBounded: true },
           status: 'inToCanvas',
@@ -171,7 +175,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
                 }}
                 ref={drop}
               >
-                {pointData.length > 0 ? (
+                {/* {pointData.length > 0 ? (
                   <React.Suspense fallback="loading">
                     <ViewRender
                       pointData={pointData}
@@ -181,7 +185,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
                       onResizeStop={onResizeStop}
                     />
                   </React.Suspense>
-                ) : null}
+                ) : null} */}
               </div>
             </div>
           </MenuProvider>
@@ -211,7 +215,4 @@ const TargetBox = memo((props: SourceBoxProps) => {
   );
 });
 
-export default connect((state: StateWithHistory<any>) => ({
-  pstate: state.present.editorModal,
-  cstate: state.present.editorPcModal,
-}))(TargetBox);
+export default TargetBox;

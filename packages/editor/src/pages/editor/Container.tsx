@@ -18,7 +18,8 @@ import CanvasTabs from './components/CanvasTabs';
 import SourceBox from './TargetBox';
 import TargetBox from './SourceBox';
 import InfiniteCanvas from './components/Canvas';
-import Calibration from 'components/Calibration';
+import NewModalForm from './components/NewModalForm';
+// import Calibration from 'components/Calibration';
 import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/utils/tool';
 
 import styles from './index.less';
@@ -39,6 +40,7 @@ const Container = (props: {
   const [scaleNum, setScale] = useState(1);
   const [collapsed, setCollapsed] = useState(false);
   const [rightColla, setRightColla] = useState(true);
+  const [newModalFormVisible, setNewModalFormVisible] = useState(false);
   const [canvasPanels, setCanvasPanels] = useState([canvasId]);
   const [activeCanvas, setActiveCanvas] = useState('default_canvas');
   const { pstate, cstate, dispatch } = props;
@@ -80,15 +82,15 @@ const Container = (props: {
     };
   }, [CpIcon]);
 
-  const handleSlider = useMemo(() => {
-    return (type: any) => {
-      if (type) {
-        setScale((prev: number) => +(prev + 0.1).toFixed(1));
-      } else {
-        setScale((prev: number) => +(prev - 0.1).toFixed(1));
-      }
-    };
-  }, []);
+  // const handleSlider = useMemo(() => {
+  //   return (type: any) => {
+  //     if (type) {
+  //       setScale((prev: number) => +(prev + 0.1).toFixed(1));
+  //     } else {
+  //       setScale((prev: number) => +(prev - 0.1).toFixed(1));
+  //     }
+  //   };
+  // }, []);
 
   const handleFormSave = useMemo(() => {
     return (data: any) => {
@@ -404,14 +406,18 @@ const Container = (props: {
             {collapsed ? <DoubleRightOutlined /> : <DoubleLeftOutlined />}
           </div>
         </div>
-        <CanvasTabs allType={allType} />
+        <CanvasTabs
+          setModalVisible={setNewModalFormVisible}
+          activeCanvas={activeCanvas}
+          setActiveCanvas={setActiveCanvas}
+        />
         <div
           style={{
             width: collapsed ? '50px' : '350px',
             transition: 'all ease-in-out 0.5s',
           }}
         ></div>
-        <InfiniteCanvas />
+        <InfiniteCanvas accepts={allType} activeCanvas={activeCanvas} />
         {/* <div
           className={styles.tickMark}
           id="calibration"
@@ -474,6 +480,7 @@ const Container = (props: {
           }}
         ></div>
       </div>
+      <NewModalForm visible={newModalFormVisible} setVisible={setNewModalFormVisible} />
     </div>
   );
 };

@@ -6,7 +6,7 @@
 import { uuid } from '@/utils/tool';
 import key from 'keymaster';
 const LOCAL_MODAL_KEY = 'modalData';
-const pointData = localStorage.getItem(LOCAL_MODAL_KEY) || '[]';
+const modals = localStorage.getItem(LOCAL_MODAL_KEY) || '[]';
 
 function overSave(name, data) {
   localStorage.setItem(name, JSON.stringify(data));
@@ -15,10 +15,17 @@ function overSave(name, data) {
 export default {
   namespace: 'modal',
   state: {
-    pointData: JSON.parse(pointData),
-    curPoint: null,
+    modals: [],
+    // pointData: JSON.parse(pointData),
+    // curPoint: null,
   },
   reducers: {
+    addCanvas(state, { payload }) {
+      // let modals = state.modals;
+      state.modals.push(payload);
+      // modals.push(payload);
+      // return [modals];
+    },
     addPointData(state, { payload }) {
       let pointData = [...state.pointData, payload];
       overSave(LOCAL_MODAL_KEY, pointData);
@@ -27,6 +34,18 @@ export default {
         pointData,
         curPoint: payload,
       };
+    },
+    addDragItem(state, { payload }) {
+      const targetIdx = state.modals.filter((modal) => modal.id === payload.id);
+      state.modals[targetIdx] = Object.assign({}, state.modals[targetIdx], payload);
+      // const currentCanvas = state.modals[targetIdx]
+      // let pointData = [...state.pointData, payload];
+      // const newCanvas = Object.assign({},currentCanvas, payload)
+      // overSave(LOCAL_MODAL_KEY, pointData);
+      // return {
+      //   ...state,
+      //   modals: newCanvas
+      // };
     },
     modPointData(state, { payload }) {
       const { id } = payload;
