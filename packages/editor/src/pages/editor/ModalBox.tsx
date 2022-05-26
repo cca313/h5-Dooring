@@ -4,7 +4,7 @@ import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import { ItemCallback } from 'react-grid-layout';
 import { Menu, Item, MenuProvider } from 'react-contexify';
 import { connect } from 'dva';
-import { useDispatch } from 'umi';
+import { useDispatch, useSelector } from 'umi';
 import { StateWithHistory } from 'redux-undo';
 import { uuid } from '@/utils/tool';
 
@@ -29,9 +29,12 @@ interface SourceBoxProps {
 const ViewRender = React.lazy(() => import('dooringUI/viewRender'));
 const TargetBox = memo((props: SourceBoxProps) => {
   const { pstate, scaleNum, canvasId, allType, dragState, setDragState, cstate } = props;
-
-  let pointData = pstate ? pstate.pointData : [];
-  const cpointData = cstate ? cstate.pointData : [];
+  const modalData = useSelector((state: any) =>
+    state.present.modal.modals.filter((modal: any) => modal.id == canvasId),
+  );
+  const { pointData = [], curPoint = {} } = modalData[0];
+  // let pointData = pstate ? pstate.pointData : [];
+  // const cpointData = cstate ? cstate.pointData : [];
 
   const [canvasRect, setCanvasRect] = useState<number[]>([]);
   const [isShowTip, setIsShowTip] = useState(true);
@@ -52,8 +55,8 @@ const TargetBox = memo((props: SourceBoxProps) => {
       dispatch({
         type: 'modal/addDragItem',
         payload: {
-          // id: uuid(6, 10),
-          id: canvasId,
+          id: uuid(6, 10),
+          canvasId,
           item,
           point: { i: `x-${pointData.length}`, x: 0, y: gridY, w, h: item.h, isBounded: true },
           status: 'inToCanvas',
@@ -72,10 +75,10 @@ const TargetBox = memo((props: SourceBoxProps) => {
       const curPointData = pointData.filter((item) => item.id === newItem.i)[0];
       dispatch({
         type: 'modal/modPointData',
-        payload: { ...curPointData, point: newItem, status: 'inToCanvas' },
+        payload: { ...curPointData, point: newItem, canvasId, status: 'inToCanvas' },
       });
     };
-  }, [cpointData, dispatch, pointData]);
+  }, [dispatch, pointData]);
 
   const onDragStart: ItemCallback = useMemo(() => {
     return (layout, oldItem, newItem, placeholder, e, element) => {
@@ -147,7 +150,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
     };
   }, []);
   const opacity = isOver ? 0.7 : 1;
-
+  console.log(pointData, modalData);
   const render = useMemo(() => {
     return (
       <Draggable
@@ -175,7 +178,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
                 }}
                 ref={drop}
               >
-                {/* {pointData.length > 0 ? (
+                {pointData.length > 0 ? (
                   <React.Suspense fallback="loading">
                     <ViewRender
                       pointData={pointData}
@@ -185,7 +188,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
                       onResizeStop={onResizeStop}
                     />
                   </React.Suspense>
-                ) : null} */}
+                ) : null}
               </div>
             </div>
           </MenuProvider>

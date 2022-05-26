@@ -22,7 +22,7 @@ export default {
   reducers: {
     addCanvas(state, { payload }) {
       // let modals = state.modals;
-      state.modals.push(payload);
+      state.modals.push({ ...payload, pointData: [], curPoint: null });
       // modals.push(payload);
       // return [modals];
     },
@@ -36,8 +36,10 @@ export default {
       };
     },
     addDragItem(state, { payload }) {
-      const targetIdx = state.modals.filter((modal) => modal.id === payload.id);
-      state.modals[targetIdx] = Object.assign({}, state.modals[targetIdx], payload);
+      const targetIdx = state.modals.findIndex((modal) => modal.id == payload.canvasId);
+      console.log(state, targetIdx);
+      state.modals[targetIdx].pointData.push(payload);
+      state.modals[targetIdx].curPoint = payload;
       // const currentCanvas = state.modals[targetIdx]
       // let pointData = [...state.pointData, payload];
       // const newCanvas = Object.assign({},currentCanvas, payload)
@@ -48,19 +50,23 @@ export default {
       // };
     },
     modPointData(state, { payload }) {
-      const { id } = payload;
-      const pointData = state.pointData.map((item) => {
-        if (item.id === id) {
-          return payload;
-        }
-        return { ...item };
-      });
-      overSave(LOCAL_MODAL_KEY, pointData);
-      return {
-        ...state,
-        pointData,
-        curPoint: payload,
-      };
+      const { id, canvasId } = payload;
+      const curModalIdx = state.modals.findIndex((modal) => modal.id == canvasId);
+      const curPointIdx = state.modals[curModalIdx].pointData.findIndex((point) => point.id == id);
+      state.modals[curModalIdx].pointData[curPointIdx] = payload;
+      state.modals[curModalIdx].curPoint = payload;
+      // const pointData = state.pointData.map((item) => {
+      //   if (item.id === id) {
+      //     return payload;
+      //   }
+      //   return { ...item };
+      // });
+      // overSave(LOCAL_MODAL_KEY, pointData);
+      // return {
+      //   ...state,
+      //   pointData,
+      //   curPoint: payload,
+      // };
     },
     importTplData(state, { payload }) {
       overSave(LOCAL_MODAL_KEY, payload);

@@ -137,6 +137,7 @@ const InfiniteCanvas = (props: ICanvasProps) => {
           return (
             activeCanvas == modal.id && (
               <ModalBox
+                key={`modalbox-${i}`}
                 dragState={dragState}
                 setDragState={setDragState}
                 scaleNum={CONSTANTS.CANVAS_SCALE_NUM}

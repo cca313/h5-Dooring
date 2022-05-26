@@ -11,7 +11,7 @@ import {
 import dooringCompt from 'dooringUI/components';
 import { ActionCreators, StateWithHistory } from 'redux-undo';
 
-import { FormRender } from '@/core';
+// import { FormRender } from '@/core';
 import HeaderComponent from './components/Header';
 // import CanvasControl from './components/CanvasControl';
 import CanvasTabs from './components/CanvasTabs';
@@ -24,6 +24,7 @@ import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/ut
 
 import styles from './index.less';
 import ModalBox from './ModalBox';
+import ConfigPanel from './components/ConfigPanel';
 
 const { TabPane } = Tabs;
 const { template, mediaTpl, graphTpl, shopTpl, schemaH5 } = dooringCompt;
@@ -41,11 +42,10 @@ const Container = (props: {
   const [collapsed, setCollapsed] = useState(false);
   const [rightColla, setRightColla] = useState(true);
   const [newModalFormVisible, setNewModalFormVisible] = useState(false);
-  const [canvasPanels, setCanvasPanels] = useState([canvasId]);
-  const [activeCanvas, setActiveCanvas] = useState('default_canvas');
+  const [activeCanvas, setActiveCanvas] = useState(canvasId);
   const { pstate, cstate, dispatch } = props;
   const pointData = pstate ? pstate.pointData : [];
-  const cpointData = cstate ? cstate.pointData : [];
+  // const cpointData = cstate ? cstate.pointData : [];
 
   const changeCollapse = useMemo(() => {
     return (c: boolean) => {
@@ -92,27 +92,27 @@ const Container = (props: {
   //   };
   // }, []);
 
-  const handleFormSave = useMemo(() => {
-    return (data: any) => {
-      dispatch({
-        type: 'editorModal/modPointData',
-        payload: { ...curPoint, item: { ...curPoint.item, config: data } },
-      });
-    };
-  }, [curPoint, dispatch]);
-
   const clearData = useCallback(() => {
     dispatch({ type: 'editorModal/clearAll' });
   }, [dispatch]);
 
-  const handleDel = useMemo(() => {
-    return (id: any) => {
-      dispatch({
-        type: 'editorModal/delPointData',
-        payload: { id },
-      });
-    };
-  }, [dispatch]);
+  // const handleFormSave = useMemo(() => {
+  //   return (data: any) => {
+  //     dispatch({
+  //       type: 'editorModal/modPointData',
+  //       payload: { ...curPoint, item: { ...curPoint.item, config: data } },
+  //     });
+  //   };
+  // }, [curPoint, dispatch]);
+
+  // const handleDel = useMemo(() => {
+  //   return (id: any) => {
+  //     dispatch({
+  //       type: 'editorModal/delPointData',
+  //       payload: { id },
+  //     });
+  //   };
+  // }, [dispatch]);
 
   const redohandler = useMemo(() => {
     return () => {
@@ -161,43 +161,12 @@ const Container = (props: {
     shopTpl.forEach((v: { type: string }) => {
       arr.push(v.type);
     });
+
     return arr;
   }, [graphTpl, mediaTpl, template]);
 
   // const [dragstate, setDragState] = useState({ x: 0, y: 0 });
   // const [dragModalstate, setModalDragState] = useState({ x: 0, y: 0 });
-
-  const ref = useRef<HTMLDivElement>(null);
-  const renderRight = useMemo(() => {
-    return (
-      <div
-        ref={ref}
-        className={styles.attrSetting}
-        style={{
-          transition: 'all ease-in-out 0.5s',
-          transform: rightColla ? 'translate(100%,0)' : 'translate(0,0)',
-        }}
-      >
-        {pointData.length && curPoint ? (
-          <>
-            <div className={styles.tit}>属性设置</div>
-            <FormRender
-              config={curPoint.item.editableEl}
-              uid={curPoint.id}
-              defaultValue={curPoint.item.config}
-              onSave={handleFormSave}
-              onDel={handleDel}
-              rightPannelRef={ref}
-            />
-          </>
-        ) : (
-          <div style={{ paddingTop: '100px' }}>
-            <Result status="404" title="还没有数据哦" subTitle="赶快拖拽组件来生成你的H5页面吧～" />
-          </div>
-        )}
-      </div>
-    );
-  }, [cpointData.length, curPoint, handleDel, handleFormSave, pointData.length, rightColla]);
 
   /* 渲染函数-左侧组件分类tab */
   const tabRender = useMemo(() => {
@@ -391,9 +360,10 @@ const Container = (props: {
           <div className={styles.componentList}>
             <Tabs
               className="editorTabclass"
-              onTabClick={() => changeCollapse(false)}
-              defaultActiveKey="1"
               tabPosition={'left'}
+              defaultActiveKey="1"
+              tabBarGutter={150}
+              onTabClick={() => changeCollapse(false)}
             >
               {tabRender}
             </Tabs>
@@ -460,7 +430,8 @@ const Container = (props: {
           </div>
           <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} />
         </div> */}
-        {renderRight}
+        {/* {renderRight} */}
+        <ConfigPanel visible={rightColla} activeCanvas={activeCanvas} />
         <div
           className={styles.rightcolla}
           style={{
@@ -480,6 +451,7 @@ const Container = (props: {
           }}
         ></div>
       </div>
+      {/* 新增弹窗画布 */}
       <NewModalForm visible={newModalFormVisible} setVisible={setNewModalFormVisible} />
     </div>
   );
