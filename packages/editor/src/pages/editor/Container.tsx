@@ -141,12 +141,6 @@ const Container = (props: {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-  useEffect(() => {
-    if (pstate.curPoint && pstate.curPoint.status === 'inToCanvas') {
-      setRightColla(false);
-    }
-  }, [pstate.curPoint]);
-
   const allType = useMemo(() => {
     let arr: string[] = [];
     template.forEach((v: { type: string }) => {
@@ -431,7 +425,7 @@ const Container = (props: {
           <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} />
         </div> */}
         {/* {renderRight} */}
-        <ConfigPanel visible={rightColla} activeCanvas={activeCanvas} />
+        <ConfigPanel visible={rightColla} setVisible={setRightColla} activeCanvas={activeCanvas} />
         <div
           className={styles.rightcolla}
           style={{

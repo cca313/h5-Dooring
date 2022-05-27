@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Result } from 'antd';
 import { useDispatch, useSelector } from 'umi';
 import { FormRender } from '@/core';
@@ -7,13 +7,15 @@ import styles from '../../index.less';
 interface IConfigPanelProps {
   // curPoint: Record<string, any>;
   visible: boolean;
+  setVisible: (visible: boolean) => void;
   activeCanvas: string | number;
   // pointData: any[];
 }
 
 const ConfigPanel = (props: IConfigPanelProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { visible, activeCanvas } = props;
+  const { visible, setVisible, activeCanvas } = props;
+  const dispatch = useDispatch();
   // const [ curPoint, setCurPoint ] = useState({})
   // const [ pointData, setPointData ] = useState([])
   const curPoint = useSelector((state: any) => {
@@ -32,7 +34,6 @@ const ConfigPanel = (props: IConfigPanelProps) => {
         .pointData;
     }
   });
-  const dispatch = useDispatch();
   const handleFormSave = useMemo(() => {
     return (data: any) => {
       dispatch({
@@ -41,6 +42,16 @@ const ConfigPanel = (props: IConfigPanelProps) => {
       });
     };
   }, [curPoint, dispatch]);
+
+  useEffect(() => {
+    if (curPoint && curPoint.status === 'inToCanvas') {
+      setVisible(false);
+    }
+  }, [curPoint]);
+
+  useEffect(() => {
+    setVisible(true);
+  }, [activeCanvas]);
 
   const handleDel = useMemo(() => {
     return (id: any) => {

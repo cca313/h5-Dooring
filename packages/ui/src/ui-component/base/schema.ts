@@ -11,7 +11,8 @@ import Qrcode from './Qrcode/schema';
 import Tab from './Tab/schema';
 import Text from './Text/schema';
 import RichText from './RichText/schema';
-import Modal from './Modal/schema';
+import Price from './Price/schema';
+// import Modal from './Modal/schema';
 
 const basicSchema = {
   Carousel,
@@ -27,6 +28,7 @@ const basicSchema = {
   Tab,
   Text,
   RichText,
-  Modal,
+  Price,
+  // Modal,
 };
 export default basicSchema;

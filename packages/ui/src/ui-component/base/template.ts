@@ -11,7 +11,8 @@ import Tab from './Tab/template';
 import Text from './Text/template';
 import WhiteTpl from './WhiteTpl/template';
 import RichText from './RichText/template';
-import Modal from './Modal/template';
+import Price from './Price/template';
+// import Modal from './Modal/template';
 
 const basicTemplate = [
   Carousel,
@@ -27,7 +28,8 @@ const basicTemplate = [
   Text,
   WhiteTpl,
   RichText,
-  Modal,
+  Price,
+  // Modal,
 ];
 const BasicTemplate = basicTemplate.map((v) => {
   return { ...v, category: 'base' };

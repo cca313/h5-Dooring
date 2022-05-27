@@ -150,7 +150,7 @@ const TargetBox = memo((props: SourceBoxProps) => {
     };
   }, []);
   const opacity = isOver ? 0.7 : 1;
-  console.log(pointData, modalData);
+  // console.log(pointData, modalData);
   const render = useMemo(() => {
     return (
       <Draggable
