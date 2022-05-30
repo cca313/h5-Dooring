@@ -1,47 +1,65 @@
 import { uuid } from '@/utils/tool';
 import { Modal, Form, Input, Switch, Button } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'umi';
 
 interface IModalForm {
   title?: string;
   visible: boolean;
+  initialValues: any;
   setVisible: (visible: boolean) => void;
   showCancel?: boolean;
   showConfirm?: boolean;
 }
 
 const ModalForm = (props: IModalForm) => {
-  const { visible, setVisible, title } = props;
-  // const [isModalVisible, setModalShow] = useState(false);
   const [form] = Form.useForm();
+  // form.resetFields();
+  const { visible, setVisible, title, initialValues } = props;
+  // const [isModalVisible, setModalShow] = useState(false);
+  console.log(initialValues);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    form.resetFields();
+  }, []);
 
   const handleModalConfirm = () => {
     setLoading(true);
     form
       .validateFields()
       .then((values) => {
-        console.log(values);
-        dispatch({
-          type: 'modal/addCanvas',
-          payload: {
-            id: uuid(6, 10),
-            config: values,
-          },
-        });
+        const { mode = 'add', id = null } = initialValues;
+        // console.log(values);
+        if (mode == 'add') {
+          dispatch({
+            type: 'modal/addCanvas',
+            payload: {
+              id: uuid(6, 10),
+              config: values,
+            },
+          });
+        } else {
+          dispatch({
+            type: 'modal/updateCanvasConfig',
+            payload: { config: values, id },
+          });
+          // console.log(values);
+        }
+        form.resetFields();
         setVisible(false);
         setLoading(false);
-        // form.resetFields();
         // onCreate(values);
       })
       .catch((info) => {
         setLoading(false);
+        form.resetFields();
         console.log('Validate Failed:', info);
       });
   };
   const handleModalCancel = () => {
+    form.resetFields();
     setVisible(false);
   };
   const renderFooter = () => {
@@ -55,8 +73,14 @@ const ModalForm = (props: IModalForm) => {
     );
   };
   return (
-    <Modal title={title || '新增弹窗'} visible={visible} footer={renderFooter()} destroyOnClose>
-      <Form form={form} layout="vertical" name="form_in_modal" preserve={false}>
+    <Modal title={title || '新增弹窗'} visible={visible} footer={renderFooter()}>
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={initialValues}
+        // preserve={false}
+      >
         <Form.Item
           name="name"
           label="弹窗名称"
@@ -67,13 +91,13 @@ const ModalForm = (props: IModalForm) => {
         <Form.Item name="title" label="弹窗标题">
           <Input />
         </Form.Item>
-        <Form.Item name="visible" label="默认显示(进入页面就显示)">
+        <Form.Item name="visible" label="默认显示(进入页面就显示)" valuePropName="checked">
           <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked />
         </Form.Item>
-        <Form.Item name="btnCancelVisible" label="显示取消按钮">
+        <Form.Item name="btnCancelVisible" label="显示取消按钮" valuePropName="checked">
           <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked />
         </Form.Item>
-        <Form.Item name="btnConfirmVisible" label="显示确认按钮">
+        <Form.Item name="btnConfirmVisible" label="显示确认按钮" valuePropName="checked">
           <Switch checkedChildren="显示" unCheckedChildren="隐藏" defaultChecked />
         </Form.Item>
       </Form>

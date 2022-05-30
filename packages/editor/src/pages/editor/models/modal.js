@@ -49,6 +49,11 @@ export default {
       //   modals: newCanvas
       // };
     },
+    updateCanvasConfig(state, { payload }) {
+      const { id, config } = payload;
+      const curModalIdx = state.modals.findIndex((modal) => modal.id == id);
+      state.modals[curModalIdx].config = config;
+    },
     modPointData(state, { payload }) {
       const { id, canvasId } = payload;
       const curModalIdx = state.modals.findIndex((modal) => modal.id == canvasId);

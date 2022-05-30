@@ -1,10 +1,10 @@
 import { Button, Divider, Tabs, Form, Modal, Input } from 'antd';
-import { useRef, useState } from 'react';
+import { ReactEventHandler, useRef, useState } from 'react';
 import TargetBox from '../../TargetBox';
 import CONSTANTS from '@/utils/CONSTANTS';
 import styles from './index.less';
 import ModalBox from '../../ModalBox';
-import { PlusOutlined } from '@ant-design/icons';
+import { CloseOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'umi';
 
 const { TabPane } = Tabs;
@@ -15,18 +15,43 @@ interface ICanvasTabsProps {
   setModalVisible: (visible: boolean) => void;
   activeCanvas: string;
   setActiveCanvas: (idx: any) => void;
+  setModalValues: (values: any) => void;
 }
 
 const CanvasSwitcher = (props: ICanvasTabsProps) => {
-  const { setModalVisible, activeCanvas, setActiveCanvas } = props;
+  const { setModalVisible, activeCanvas, setActiveCanvas, setModalValues } = props;
   const modalTabs = useSelector((state: any) => state.present.modal.modals);
-  console.log(modalTabs);
+  // console.log(modalTabs);
   const handleBtnAddClick = () => {
-    setModalVisible(true);
+    setModalValues({
+      name: '',
+      title: '',
+      visible: true,
+      btnCancelVisible: true,
+      btnConfirmVisible: true,
+    });
+    setTimeout(() => setModalVisible(true), 100);
   };
   const handleBtnTabClick = (id: string) => {
     if (id === activeCanvas) return;
     setActiveCanvas(id);
+  };
+  const handleBtnEditClick = (modalId: string, e: any) => {
+    // console.log(modalId, e);
+    e.stopPropagation();
+    // e.preventDefault();
+    const activeCanvasConfig =
+      modalTabs[modalTabs.findIndex((modal: any) => modal.id == modalId)].config;
+    console.log(activeCanvasConfig);
+    setModalValues({ ...activeCanvasConfig, mode: 'edit', id: modalId });
+    setTimeout(() => setModalVisible(true), 100);
+    // setModalVisible()
+    // console.log(1);
+  };
+  const handleBtnDelClick = (e: any) => {
+    e.stopPropagation();
+    // e.preventDefault();
+    console.log(2);
   };
   return (
     <div className={styles.buttonsBox}>
@@ -74,11 +99,20 @@ const CanvasSwitcher = (props: ICanvasTabsProps) => {
         modalTabs.map((modal: any) => {
           return (
             <Button
-              className={styles.gap}
+              className={[styles.gap, styles.btnTab].join(' ')}
               type={activeCanvas == modal.id ? 'primary' : 'default'}
               onClick={() => handleBtnTabClick(modal.id)}
             >
-              {modal.config.name}
+              <div className={styles.contetBox}>
+                <span onClick={(e) => handleBtnEditClick(modal.id, e)}>
+                  <EditOutlined />
+                </span>
+                <span style={{ marginLeft: 10 }}>
+                  <CloseOutlined onClick={() => handleBtnDelClick(modal.id)} />
+                </span>
+                <Divider type="vertical"></Divider>
+                <span>{modal.config.name}</span>
+              </div>
             </Button>
           );
         })}

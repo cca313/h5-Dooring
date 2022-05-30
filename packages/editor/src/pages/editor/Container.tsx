@@ -39,6 +39,13 @@ const Container = (props: {
 }) => {
   const canvasId = 'default_canvas';
   const [scaleNum, setScale] = useState(1);
+  const [initialModalValues, setInitialValues] = useState({
+    name: '',
+    title: '',
+    visible: true,
+    btnCancelVisible: true,
+    btnConfirmVisible: true,
+  });
   const [collapsed, setCollapsed] = useState(false);
   const [rightColla, setRightColla] = useState(true);
   const [newModalFormVisible, setNewModalFormVisible] = useState(false);
@@ -371,9 +378,10 @@ const Container = (props: {
           </div>
         </div>
         <CanvasTabs
-          setModalVisible={setNewModalFormVisible}
           activeCanvas={activeCanvas}
+          setModalVisible={setNewModalFormVisible}
           setActiveCanvas={setActiveCanvas}
+          setModalValues={setInitialValues}
         />
         <div
           style={{
@@ -446,7 +454,11 @@ const Container = (props: {
         ></div>
       </div>
       {/* 新增弹窗画布 */}
-      <NewModalForm visible={newModalFormVisible} setVisible={setNewModalFormVisible} />
+      <NewModalForm
+        visible={newModalFormVisible}
+        initialValues={initialModalValues}
+        setVisible={setNewModalFormVisible}
+      />
     </div>
   );
 };
