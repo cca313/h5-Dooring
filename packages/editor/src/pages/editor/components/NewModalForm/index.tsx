@@ -14,7 +14,6 @@ interface IModalForm {
 
 const ModalForm = (props: IModalForm) => {
   const [form] = Form.useForm();
-  // form.resetFields();
   const { visible, setVisible, title, initialValues } = props;
   // const [isModalVisible, setModalShow] = useState(false);
   console.log(initialValues);
@@ -22,8 +21,9 @@ const ModalForm = (props: IModalForm) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('effect');
     form.resetFields();
-  }, []);
+  }, [initialValues]);
 
   const handleModalConfirm = () => {
     setLoading(true);
@@ -47,9 +47,9 @@ const ModalForm = (props: IModalForm) => {
           });
           // console.log(values);
         }
-        form.resetFields();
         setVisible(false);
         setLoading(false);
+        form.resetFields();
         // onCreate(values);
       })
       .catch((info) => {
@@ -72,14 +72,16 @@ const ModalForm = (props: IModalForm) => {
       </div>
     );
   };
+  /* 弹窗中的表单 */
+  /* preserve forcerender effect中resetfields */
   return (
-    <Modal title={title || '新增弹窗'} visible={visible} footer={renderFooter()}>
+    <Modal title={title || '新增弹窗'} visible={visible} forceRender footer={renderFooter()}>
       <Form
         form={form}
         layout="vertical"
         name="form_in_modal"
         initialValues={initialValues}
-        // preserve={false}
+        preserve={false}
       >
         <Form.Item
           name="name"

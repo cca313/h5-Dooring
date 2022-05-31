@@ -11,19 +11,14 @@ import {
 import dooringCompt from 'dooringUI/components';
 import { ActionCreators, StateWithHistory } from 'redux-undo';
 
-// import { FormRender } from '@/core';
 import HeaderComponent from './components/Header';
 // import CanvasControl from './components/CanvasControl';
 import CanvasTabs from './components/CanvasTabs';
-import SourceBox from './TargetBox';
 import TargetBox from './SourceBox';
 import InfiniteCanvas from './components/Canvas';
 import NewModalForm from './components/NewModalForm';
-// import Calibration from 'components/Calibration';
-import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/utils/tool';
 
 import styles from './index.less';
-import ModalBox from './ModalBox';
 import ConfigPanel from './components/ConfigPanel';
 
 const { TabPane } = Tabs;

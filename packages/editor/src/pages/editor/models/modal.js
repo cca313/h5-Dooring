@@ -54,6 +54,11 @@ export default {
       const curModalIdx = state.modals.findIndex((modal) => modal.id == id);
       state.modals[curModalIdx].config = config;
     },
+    deleteModalCanvas(state, { payload }) {
+      const { id } = payload;
+      const curModalIdx = state.modals.findIndex((modal) => modal.id == id);
+      state.modals.splice(curModalIdx, 1);
+    },
     modPointData(state, { payload }) {
       const { id, canvasId } = payload;
       const curModalIdx = state.modals.findIndex((modal) => modal.id == canvasId);

@@ -1,6 +1,14 @@
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-20 16:03:56
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-05-31 14:31:37
+ * @FilePath: \legao\packages\editor\.umirc.ts
+ * @Descriptions: todo
+ */
 import path from 'path';
 import { defineConfig } from 'umi';
-const { ModuleFederationPlugin } = require("webpack").container;
+const { ModuleFederationPlugin } = require('webpack').container;
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -53,7 +61,7 @@ export default defineConfig({
     },
   ],
   theme: {
-    'primary-color': '#2F54EB',
+    'primary-color': '#049ae1',
     // "btn-primary-bg": "#2F54EB"
   },
   extraBabelPlugins: [['import', { libraryName: 'zarm', style: true }]],
@@ -65,18 +73,19 @@ export default defineConfig({
   },
   fastRefresh: {},
   webpack5: {},
-  plugins: [
-    './src/plugins/umi-msfu-plugin.ts',
-  ],
+  plugins: ['./src/plugins/umi-msfu-plugin.ts'],
   chainWebpack(memo) {
-    memo
-      .plugin('mf')
-      .use(ModuleFederationPlugin, [{
-        name: "dooringEditor",
+    memo.plugin('mf').use(ModuleFederationPlugin, [
+      {
+        name: 'dooringEditor',
         remotes: {
-          dooringUI: "dooringUI@//localhost:8008/remoteEntry.js"
+          dooringUI: 'dooringUI@//localhost:8008/remoteEntry.js',
         },
-        shared: { react: { singleton: true, eager: true, requiredVersion: '17.x' }, "react-dom": { singleton: true,eager: true, requiredVersion: '17.x' }, }
-      }])
+        shared: {
+          react: { singleton: true, eager: true, requiredVersion: '17.x' },
+          'react-dom': { singleton: true, eager: true, requiredVersion: '17.x' },
+        },
+      },
+    ]);
   },
 });
