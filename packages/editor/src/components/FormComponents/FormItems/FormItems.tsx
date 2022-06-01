@@ -16,18 +16,21 @@ const formTpl: TFormItemsDefaultType = [
     type: 'Text',
     label: '文本框',
     placeholder: '请输入文本',
+    required: true,
   },
   {
     id: '2',
     type: 'Textarea',
     label: '长文本框',
     placeholder: '请输入长文本请输入长文本',
+    required: true,
   },
   {
     id: '3',
     type: 'Number',
     label: '数值',
     placeholder: ' 请输入数值',
+    required: true,
   },
   {
     id: '4',
@@ -37,6 +40,7 @@ const formTpl: TFormItemsDefaultType = [
       { label: '选项一', value: '1' },
       { label: '选项二', value: '2' },
     ],
+    required: true,
   },
   {
     id: '5',
@@ -47,12 +51,14 @@ const formTpl: TFormItemsDefaultType = [
       { label: '选项二', value: '2' },
       { label: '选项三', value: '3' },
     ],
+    required: true,
   },
   {
     id: '6',
     type: 'Date',
     label: '日期框',
     placeholder: '',
+    required: true,
   },
   {
     id: '7',
@@ -60,6 +66,7 @@ const formTpl: TFormItemsDefaultType = [
     label: '纯文本',
     fontSize: 12,
     color: 'rgba(0,0,0,1)',
+    required: true,
   },
 ];
 
@@ -80,7 +87,7 @@ const FormItems = (props: FormItemsProps) => {
   });
 
   const handleAddItem = (item: baseFormUnion) => {
-    let tpl = formTpl.find(v => v.type === item.type);
+    let tpl = formTpl.find((v) => v.type === item.type);
     let newData = [...formData, { ...tpl!, id: uuid(6, 10) }];
     setFormData(newData);
     onChange && onChange(newData);
@@ -88,18 +95,19 @@ const FormItems = (props: FormItemsProps) => {
   };
 
   const handleEditItem = (item: baseFormUnion) => {
+    console.log(item, 'item');
     setVisible(true);
     setCurItem(item);
   };
 
   const handleDelItem = (item: baseFormUnion) => {
-    let newData = formData.filter(v => v.id !== item.id);
+    let newData = formData.filter((v) => v.id !== item.id);
     setFormData(newData);
     onChange && onChange(newData);
   };
 
   const handleSaveItem = (data: baseFormUnion) => {
-    let newData = formData.map(v => (v.id === data.id ? data : v));
+    let newData = formData.map((v) => (v.id === data.id ? data : v));
     setFormData(newData);
     onChange && onChange(newData);
     setVisible(false);
@@ -125,7 +133,7 @@ const FormItems = (props: FormItemsProps) => {
       }
     };
   }, [force, rightPannelRef]);
-
+  console.log(curItem);
   return (
     <div className={styles.formItemWrap}>
       <div className={styles.formTitle}>表单控件</div>
@@ -139,12 +147,12 @@ const FormItems = (props: FormItemsProps) => {
               </div>
               <div className={styles.deleteWrap}>
                 <span className={styles.operationBtn} onClick={() => handleDelItem(item)}>
-                  <MinusCircleFilled />
+                  <MinusCircleFilled style={{ color: '#049ae1' }} />
                 </span>
               </div>
               <div className={styles.editWrap}>
                 <span className={styles.operationBtn} onClick={() => handleEditItem(item)}>
-                  <EditFilled />
+                  <EditFilled style={{ color: '#049ae1' }} />
                 </span>
               </div>
             </div>

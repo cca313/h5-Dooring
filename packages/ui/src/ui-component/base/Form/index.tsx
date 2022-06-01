@@ -1,8 +1,16 @@
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-20 16:03:56
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-05-31 15:30:24
+ * @FilePath: \legao\packages\ui\src\ui-component\base\Form\index.tsx
+ * @Descriptions: todo
+ */
 import React, { memo, useCallback } from 'react';
 import { Button } from 'zarm';
 import BaseForm from './BaseForm';
 import styles from './index.less';
-import { IFormConfig } from './schema';
+import type { IFormConfig } from './schema';
 import logo from '@/assets/form.png';
 const FormComponent = (props: IFormConfig & { isTpl: boolean }) => {
   const {
@@ -13,7 +21,7 @@ const FormComponent = (props: IFormConfig & { isTpl: boolean }) => {
     btnColor,
     titWeight,
     btnTextColor,
-    api,
+    // api,
     formControls,
   } = props;
   const formData: Record<string, any> = {};
@@ -24,17 +32,17 @@ const FormComponent = (props: IFormConfig & { isTpl: boolean }) => {
     [formData],
   );
   const handleSubmit = () => {
-    if (api) {
-      fetch(api, {
-        body: JSON.stringify(formData),
-        cache: 'no-cache',
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'POST',
-        mode: 'cors',
-      });
-    }
+    // if (api) {
+    //   fetch(api, {
+    //     body: JSON.stringify(formData),
+    //     cache: 'no-cache',
+    //     headers: {
+    //       'content-type': 'application/json',
+    //     },
+    //     method: 'POST',
+    //     mode: 'cors',
+    //   });
+    // }
   };
 
   const isEditorPage = window.location.pathname.indexOf('editor') > -1;
@@ -64,7 +72,7 @@ const FormComponent = (props: IFormConfig & { isTpl: boolean }) => {
             </div>
           )}
           <div className={styles.formContent}>
-            {formControls.map(item => {
+            {formControls.map((item) => {
               const FormItem = BaseForm[item.type];
               return (
                 <FormItem onChange={(v: string) => handleChange(item, v)} {...item} key={item.id} />

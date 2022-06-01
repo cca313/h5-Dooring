@@ -7,12 +7,12 @@ export interface IUploadConfigType {
   cropRate?: number;
 }
 
-export type TUploadDefaultType = Array<{
+export type TUploadDefaultType = {
   uid: string;
   name: string;
   status: string;
   url: string;
-}>;
+}[];
 /////////////////
 export interface ITextConfigType {
   key: string;
@@ -55,7 +55,7 @@ export type TDataListDefaultTypeItem = {
   imgUrl: TUploadDefaultType;
 };
 
-export type TDataListDefaultType = Array<TDataListDefaultTypeItem>;
+export type TDataListDefaultType = TDataListDefaultTypeItem[];
 
 ////////////////////
 export interface IColorConfigType {
@@ -80,17 +80,17 @@ export interface IMutiTextConfigType {
   type: 'MutiText';
 }
 
-export type TMutiTextDefaultType = Array<string>;
+export type TMutiTextDefaultType = string[];
 
 /////////////////////////////////
 export interface ISelectConfigType<KeyType> {
   key: string;
   name: string;
   type: 'Select';
-  range: Array<{
+  range: {
     key: KeyType;
     text: string;
-  }>;
+  }[];
 }
 export type TSelectDefaultType<KeyType> = KeyType;
 
@@ -99,10 +99,10 @@ export interface IRadioConfigType<KeyType> {
   key: string;
   name: string;
   type: 'Radio';
-  range: Array<{
+  range: {
     key: KeyType;
     text: string;
-  }>;
+  }[];
 }
 export type TRadioDefaultType<KeyType> = KeyType;
 
@@ -120,7 +120,7 @@ export interface ICardPickerConfigType<T> {
   key: string;
   name: string;
   type: 'CardPicker';
-  icons: Array<T>;
+  icons: T[];
 }
 export type TCardPickerDefaultType<T> = T;
 
@@ -131,10 +131,10 @@ export interface ITableConfigType {
   name: string;
   type: 'Table';
 }
-export type TTableDefaultType = Array<{
+export type TTableDefaultType = {
   name: string;
   value: number;
-}>;
+}[];
 
 // position input control
 export interface IPosConfigType {
@@ -169,6 +169,7 @@ export type baseFormTextTpl = {
   type: 'Text';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormTextTipTpl = {
@@ -177,6 +178,7 @@ export type baseFormTextTipTpl = {
   label: string;
   color: string;
   fontSize: number;
+  required: boolean;
 };
 
 export type baseFormNumberTpl = {
@@ -184,6 +186,7 @@ export type baseFormNumberTpl = {
   type: 'Number';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormTextAreaTpl = {
@@ -191,6 +194,7 @@ export type baseFormTextAreaTpl = {
   type: 'Textarea';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormMyRadioTpl = {
@@ -198,6 +202,7 @@ export type baseFormMyRadioTpl = {
   type: 'MyRadio';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormMyCheckboxTpl = {
@@ -205,6 +210,7 @@ export type baseFormMyCheckboxTpl = {
   type: 'MyCheckbox';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormMySelectTpl = {
@@ -212,6 +218,7 @@ export type baseFormMySelectTpl = {
   type: 'MySelect';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormDateTpl = {
@@ -219,6 +226,7 @@ export type baseFormDateTpl = {
   type: 'Date';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormUnion =
@@ -240,4 +248,4 @@ export type baseFormUnionType =
   | baseFormMySelectTpl['type']
   | baseFormDateTpl['type'];
 
-export type TFormItemsDefaultType = Array<baseFormUnion>;
+export type TFormItemsDefaultType = baseFormUnion[];

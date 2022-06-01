@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect } from 'react';
-import { Form, Select, Input, Modal, Button, InputNumber } from 'antd';
+import { Form, Select, Input, Modal, Button, InputNumber, Switch } from 'antd';
 import { baseFormOptionsType } from '../types';
 import Color from '../Color';
 
@@ -16,7 +16,7 @@ interface EditorModalProps {
   visible: boolean;
 }
 
-const EditorModal: FC<EditorModalProps> = props => {
+const EditorModal: FC<EditorModalProps> = (props) => {
   const { item, onSave, visible } = props;
 
   const onFinish = (values: any) => {
@@ -26,11 +26,11 @@ const EditorModal: FC<EditorModalProps> = props => {
   const handleOk = () => {
     form
       .validateFields()
-      .then(values => {
+      .then((values) => {
         values.id = item.id;
         onSave && onSave(values);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -104,6 +104,44 @@ const EditorModal: FC<EditorModalProps> = props => {
                 <Input placeholder="请输入提示文本" />
               </Form.Item>
             )}
+            {!!item.required && (
+              <Form.Item label="是否必填" name="required">
+                <Switch checkedChildren="是" unCheckedChildren="否" checked={item.required} />
+              </Form.Item>
+            )}
+            {
+              <Form.Item
+                label="验证类型"
+                name="validateType"
+                rules={[{ required: true, message: '选项不能为空!' }]}
+              >
+                <Select
+                  placeholder="请选择"
+                  // mode="tags"
+                  labelInValue
+                >
+                  <Option value={'null'} key="1">
+                    不验证
+                  </Option>
+                  <Option value={'phone'} key="2">
+                    手机号
+                  </Option>
+                  <Option value={'email'} key="3">
+                    邮箱
+                  </Option>
+                  <Option value={'id'} key="4">
+                    身份证
+                  </Option>
+                  {/* {item.validators.map((v: baseFormOptionsType, i: number) => {
+                    return (
+                      <Option value={v.value} key={i}>
+                        {v.label}
+                      </Option>
+                    );
+                  })} */}
+                </Select>
+              </Form.Item>
+            }
             {!!item.options && (
               <Form.Item
                 label="选项源"

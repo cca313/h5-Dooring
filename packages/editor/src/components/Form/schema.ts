@@ -29,7 +29,7 @@ export interface IFormConfig {
   bgColor: TColorDefaultType;
   btnColor: TColorDefaultType;
   btnTextColor: TColorDefaultType;
-  api: TTextDefaultType;
+  // api: TTextDefaultType;
   formControls: TFormItemsDefaultType;
 }
 
@@ -93,11 +93,11 @@ const Form: IFormSchema = {
       name: '按钮文本颜色',
       type: 'Color',
     },
-    {
-      key: 'api',
-      name: '表单Api地址',
-      type: 'Text',
-    },
+    // {
+    //   key: 'api',
+    //   name: '表单Api地址',
+    //   type: 'Text',
+    // },
     {
       key: 'formControls',
       name: '表单控件',
@@ -112,19 +112,21 @@ const Form: IFormSchema = {
     bgColor: 'rgba(255,255,255,1)',
     btnColor: 'rgba(20,54,226,100)',
     btnTextColor: 'rgba(255,255,255,1)',
-    api: '',
+    // api: '',
     formControls: [
       {
         id: '1',
         type: 'Text',
         label: '姓名',
         placeholder: '请输入姓名',
+        required: true,
       },
       {
         id: '2',
         type: 'Number',
         label: '年龄',
         placeholder: ' 请输入年龄',
+        required: true,
       },
       {
         id: '4',
@@ -135,6 +137,7 @@ const Form: IFormSchema = {
           { label: '乒乓球', value: '2' },
           { label: '健身', value: '3' },
         ],
+        required: true,
       },
     ],
   },

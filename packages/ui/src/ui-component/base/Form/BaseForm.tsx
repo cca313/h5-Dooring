@@ -1,7 +1,8 @@
 import { Input, Cell, DateSelect, Radio, Select, Checkbox } from 'zarm';
 import styles from './baseForm.less';
-import React, { ReactText, useState } from 'react';
-import {
+import type { ReactText } from 'react';
+import React, { useState } from 'react';
+import type {
   baseFormDateTpl,
   baseFormMyRadioTpl,
   baseFormMyCheckboxTpl,
@@ -71,7 +72,7 @@ const BaseForm: TBaseForm = {
     );
   },
   MyCheckbox: (
-    props: baseFormMyCheckboxTpl & { onChange: (v: Array<ReactText> | undefined) => void },
+    props: baseFormMyCheckboxTpl & { onChange: (v: ReactText[] | undefined) => void },
   ) => {
     const { label, options, onChange } = props;
     return (
@@ -123,7 +124,7 @@ const BaseForm: TBaseForm = {
   },
   MyTextTip: (props: baseFormTextTipTpl) => {
     const { label, color, fontSize } = props;
-    return <Cell title={<div style={{ color, fontSize }}>{label}</div>}></Cell>;
+    return <Cell title={<div style={{ color, fontSize }}>{label}</div>} />;
   },
 };
 

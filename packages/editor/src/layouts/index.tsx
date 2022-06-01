@@ -139,7 +139,7 @@ export default function Layout({ children }: IRouteComponentProps) {
       : { height: '100%', overflow: 'auto' };
   return (
     <div style={hackCodeStyle}>
-      <div
+      {/* <div
         style={{
           position: 'fixed',
           right: `${modalOpen ? '-100%' : '10px'}`,
@@ -155,7 +155,7 @@ export default function Layout({ children }: IRouteComponentProps) {
         >
           <CustomerServiceOutlined></CustomerServiceOutlined>
         </Button>
-      </div>
+      </div> */}
       {render}
       {children}
       {/* {window.location.pathname.indexOf('editor') > -1 && (

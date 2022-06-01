@@ -1,6 +1,7 @@
-import React, { ReactText } from 'react';
+import type { ReactText } from 'react';
+import React from 'react';
 import { Button } from 'antd';
-import {
+import type {
   baseFormDateTpl,
   baseFormMyRadioTpl,
   baseFormMyCheckboxTpl,
@@ -60,7 +61,7 @@ const BaseForm: TBaseForm = {
     );
   },
   MyCheckbox: (
-    props: baseFormMyCheckboxTpl & { onChange: (v: Array<ReactText> | undefined) => void },
+    props: baseFormMyCheckboxTpl & { onChange: (v: ReactText[] | undefined) => void },
   ) => {
     const { label, onChange } = props;
     return (

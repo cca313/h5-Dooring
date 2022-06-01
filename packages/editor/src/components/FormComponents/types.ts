@@ -170,6 +170,7 @@ export type baseFormTextTpl = {
   type: 'Text';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormTextTipTpl = {
@@ -178,6 +179,7 @@ export type baseFormTextTipTpl = {
   label: string;
   color: string;
   fontSize: number;
+  required: boolean;
 };
 
 export type baseFormNumberTpl = {
@@ -185,6 +187,7 @@ export type baseFormNumberTpl = {
   type: 'Number';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormTextAreaTpl = {
@@ -192,6 +195,7 @@ export type baseFormTextAreaTpl = {
   type: 'Textarea';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormMyRadioTpl = {
@@ -199,6 +203,7 @@ export type baseFormMyRadioTpl = {
   type: 'MyRadio';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormMyCheckboxTpl = {
@@ -206,6 +211,7 @@ export type baseFormMyCheckboxTpl = {
   type: 'MyCheckbox';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormMySelectTpl = {
@@ -213,6 +219,7 @@ export type baseFormMySelectTpl = {
   type: 'MySelect';
   label: string;
   options: baseFormOptionsType[];
+  required: boolean;
 };
 
 export type baseFormDateTpl = {
@@ -220,6 +227,7 @@ export type baseFormDateTpl = {
   type: 'Date';
   label: string;
   placeholder: string;
+  required: boolean;
 };
 
 export type baseFormUnion =

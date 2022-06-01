@@ -1,3 +1,11 @@
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-26 15:16:38
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-06-01 11:50:35
+ * @FilePath: \legao\packages\editor\src\pages\editor\components\ConfigPanel\index.tsx
+ * @Descriptions: todo
+ */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Result } from 'antd';
 import { useDispatch, useSelector } from 'umi';
@@ -61,7 +69,7 @@ const ConfigPanel = (props: IConfigPanelProps) => {
       });
     };
   }, [dispatch]);
-
+  console.log(curPoint, 'cur');
   return (
     <div
       ref={ref}
