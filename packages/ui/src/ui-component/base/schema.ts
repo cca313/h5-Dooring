@@ -1,3 +1,11 @@
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-20 16:03:56
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-06-02 10:13:53
+ * @FilePath: \legao\packages\ui\src\ui-component\base\schema.ts
+ * @Descriptions: todo
+ */
 import Carousel from './Carousel/schema';
 import Form from './Form/schema';
 import Header from './Header/schema';
@@ -12,6 +20,7 @@ import Tab from './Tab/schema';
 import Text from './Text/schema';
 import RichText from './RichText/schema';
 import Price from './Price/schema';
+import Button from './Button/schema';
 // import Modal from './Modal/schema';
 
 const basicSchema = {
@@ -29,6 +38,7 @@ const basicSchema = {
   Text,
   RichText,
   Price,
+  Button,
   // Modal,
 };
 export default basicSchema;

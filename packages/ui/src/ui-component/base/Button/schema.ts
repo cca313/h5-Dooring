@@ -2,7 +2,7 @@
  * @Author: Gavin Chan
  * @Date: 2022-06-01 15:40:55
  * @LastEditors: Gavin
- * @LastEditTime: 2022-06-01 18:06:21
+ * @LastEditTime: 2022-06-02 11:07:36
  * @FilePath: \legao\packages\ui\src\ui-component\base\Button\schema.ts
  * @Descriptions: todo
  */
@@ -28,6 +28,8 @@ export type TButtonEditData = (
 )[];
 export interface IButtonConfig {
   text: TTextDefaultType;
+  url: TTextDefaultType;
+  bgColor: TColorDefaultType;
   color: TColorDefaultType;
   fontSize: TNumberDefaultType;
   align: TSelectDefaultType<TTextAlignSelectKeyType>;
@@ -39,12 +41,22 @@ export interface IButtonSchema {
   editData: TButtonEditData;
   config: IButtonConfig;
 }
-const Text: IButtonSchema = {
+const Button: IButtonSchema = {
   editData: [
     {
       key: 'text',
       name: '文字',
       type: 'Text',
+    },
+    {
+      key: 'url',
+      name: '跳转地址',
+      type: 'Text',
+    },
+    {
+      key: 'bgColor',
+      name: '背景颜色',
+      type: 'Color',
     },
     {
       key: 'color',
@@ -82,11 +94,11 @@ const Text: IButtonSchema = {
       range: [
         {
           key: 'top',
-          text: '左对齐',
+          text: '吸顶',
         },
         {
           key: 'bottom',
-          text: '居中对齐',
+          text: '吸底',
         },
       ],
     },
@@ -97,7 +109,9 @@ const Text: IButtonSchema = {
     },
   ],
   config: {
-    text: '我是文本',
+    text: '我是按钮',
+    url: '',
+    bgColor: 'rgba(228,65,65,1)',
     color: 'rgba(60,60,60,1)',
     fontSize: 18,
     align: 'center',
@@ -105,4 +119,4 @@ const Text: IButtonSchema = {
     position: 'bottom',
   },
 };
-export default Text;
+export default Button;
