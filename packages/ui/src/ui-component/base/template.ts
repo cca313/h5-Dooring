@@ -2,7 +2,7 @@
  * @Author: Gavin Chan
  * @Date: 2022-05-20 16:03:56
  * @LastEditors: Gavin
- * @LastEditTime: 2022-06-02 10:14:11
+ * @LastEditTime: 2022-06-02 16:28:11
  * @FilePath: \legao\packages\ui\src\ui-component\base\template.ts
  * @Descriptions: todo
  */
@@ -21,6 +21,7 @@ import WhiteTpl from './WhiteTpl/template';
 import RichText from './RichText/template';
 import Price from './Price/template';
 import Button from './Button/template';
+import Input from './Input/template';
 // import Modal from './Modal/template';
 
 const basicTemplate = [
@@ -39,6 +40,7 @@ const basicTemplate = [
   RichText,
   Price,
   Button,
+  Input,
   // Modal,
 ];
 const BasicTemplate = basicTemplate.map((v) => {

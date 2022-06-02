@@ -2,7 +2,7 @@
  * @Author: Gavin Chan
  * @Date: 2022-05-20 16:03:56
  * @LastEditors: Gavin
- * @LastEditTime: 2022-06-02 10:13:53
+ * @LastEditTime: 2022-06-02 16:27:53
  * @FilePath: \legao\packages\ui\src\ui-component\base\schema.ts
  * @Descriptions: todo
  */
@@ -21,6 +21,7 @@ import Text from './Text/schema';
 import RichText from './RichText/schema';
 import Price from './Price/schema';
 import Button from './Button/schema';
+import Input from './Input/schema';
 // import Modal from './Modal/schema';
 
 const basicSchema = {
@@ -39,6 +40,7 @@ const basicSchema = {
   RichText,
   Price,
   Button,
+  Input,
   // Modal,
 };
 export default basicSchema;
