@@ -164,6 +164,12 @@ export type baseFormOptionsType = {
   value: string;
 };
 
+export type baseFormPickerOptionsType = {
+  label: string;
+  code: string;
+  children: unknown[];
+};
+
 export type baseFormTextTpl = {
   id: string;
   type: 'Text';
@@ -229,6 +235,15 @@ export type baseFormDateTpl = {
   required: boolean;
 };
 
+export type baseFormPickerTpl = {
+  id: string;
+  type: 'Picker';
+  label: string;
+  placeholder: string;
+  // options: baseFormPickerOptionsType[];
+  required: boolean;
+};
+
 export type baseFormUnion =
   | baseFormTextTpl
   | baseFormTextTipTpl
@@ -237,7 +252,8 @@ export type baseFormUnion =
   | baseFormMyRadioTpl
   | baseFormMyCheckboxTpl
   | baseFormMySelectTpl
-  | baseFormDateTpl;
+  | baseFormDateTpl
+  | baseFormPickerTpl;
 export type baseFormUnionType =
   | baseFormTextTpl['type']
   | baseFormTextTipTpl['type']
@@ -246,6 +262,7 @@ export type baseFormUnionType =
   | baseFormMyRadioTpl['type']
   | baseFormMyCheckboxTpl['type']
   | baseFormMySelectTpl['type']
-  | baseFormDateTpl['type'];
+  | baseFormDateTpl['type']
+  | baseFormPickerTpl['type'];
 
 export type TFormItemsDefaultType = baseFormUnion[];

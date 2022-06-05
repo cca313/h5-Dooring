@@ -1,5 +1,13 @@
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-20 16:03:56
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-06-05 09:56:05
+ * @FilePath: \legao\packages\ui\src\ui-component\base\Image\index.tsx
+ * @Descriptions: todo
+ */
 import React, { memo } from 'react';
-import { IImageConfig } from './schema';
+import type { IImageConfig } from './schema';
 import logo from '@/assets/img.png';
 const Image = memo((props: IImageConfig) => {
   const {

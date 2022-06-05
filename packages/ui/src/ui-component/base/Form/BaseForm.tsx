@@ -11,6 +11,7 @@ import type {
   baseFormTextAreaTpl,
   baseFormTextTpl,
   baseFormTextTipTpl,
+  baseFormPickerTpl,
   baseFormUnionType,
 } from '@/components/PanelComponents/FormEditor/types';
 import { formatTime } from '@/utils/tool';
@@ -59,7 +60,7 @@ const BaseForm: TBaseForm = {
         <div className={styles.radioTitle}>{label}</div>
         <Cell>
           <Radio.Group onChange={onChange}>
-            {options.map((item, i) => {
+            {options.map((item: any, i: any) => {
               return (
                 <Radio value={item.value} key={i} className={styles.radioItem}>
                   {item.label}
@@ -125,6 +126,24 @@ const BaseForm: TBaseForm = {
   MyTextTip: (props: baseFormTextTipTpl) => {
     const { label, color, fontSize } = props;
     return <Cell title={<div style={{ color, fontSize }}>{label}</div>} />;
+  },
+  Picker: (props: baseFormPickerTpl) => {
+    const { label } = props;
+    const [value, setValue] = useState([]);
+    // const [wheelDefaultValue, setWheelDefaultValue] = useState([]);
+    return (
+      <Cell title={label}>
+        <Select
+          value={value}
+          // wheelDefaultValue={wheelDefaultValue}
+          // dataSource={options}
+          onOk={(selected: any) => {
+            console.log('Select onOk: ', selected);
+            setValue(selected.map((item: any) => item.value));
+          }}
+        />
+      </Cell>
+    );
   },
 };
 

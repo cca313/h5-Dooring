@@ -10,6 +10,7 @@ import {
   baseFormTextAreaTpl,
   baseFormTextTpl,
   baseFormTextTipTpl,
+  baseFormPickerTpl,
   baseFormUnionType,
 } from '@/components/PanelComponents/FormEditor/types';
 import { formatTime } from '@/utils/tool';
@@ -124,6 +125,24 @@ const BaseForm: TBaseForm = {
   MyTextTip: (props: baseFormTextTipTpl) => {
     const { label, color, fontSize } = props;
     return <Cell title={<div style={{ color, fontSize }}>{label}</div>}></Cell>;
+  },
+  Picker: (props: baseFormPickerTpl) => {
+    const { label, options } = props;
+    const [value, setValue] = useState([]);
+    // const [wheelDefaultValue, setWheelDefaultValue] = useState([]);
+    return (
+      <Cell title={label}>
+        <Select
+          value={value}
+          // wheelDefaultValue={wheelDefaultValue}
+          dataSource={options}
+          onOk={(selected: any) => {
+            console.log('Select onOk: ', selected);
+            setValue(selected.map((item: any) => item.value));
+          }}
+        />
+      </Cell>
+    );
   },
 };
 

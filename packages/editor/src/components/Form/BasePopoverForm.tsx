@@ -11,6 +11,7 @@ import {
   baseFormTextTipTpl,
   baseFormUnionType,
 } from '@/components/PanelComponents/FormEditor/types';
+import { baseFormPickerTpl } from '../FormComponents/types';
 
 // 维护表单控件， 提高form渲染性能
 
@@ -90,6 +91,21 @@ const BaseForm: TBaseForm = {
     );
   },
   MyTextTip: (props: baseFormTextTipTpl) => {
+    const { label } = props;
+    return (
+      <Button
+        style={{
+          color: '#fff',
+          backgroundColor: '#4A4A4A',
+          borderRadius: '2px',
+          lineHeight: '0px',
+        }}
+      >
+        {label}
+      </Button>
+    );
+  },
+  Picker: (props: baseFormPickerTpl) => {
     const { label } = props;
     return (
       <Button

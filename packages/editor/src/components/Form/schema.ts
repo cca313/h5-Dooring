@@ -139,6 +139,31 @@ const Form: IFormSchema = {
         ],
         required: true,
       },
+      // {
+      //   id: '5',
+      //   type: 'Picker',
+      //   placeholder: '请选择',
+      //   label: '省市选择',
+      //   // options: [
+      //   //   {
+      //   //     code: '1',
+      //   //     label: '北京市',
+      //   //     children: [
+      //   //       { code: '11', label: '海淀区' },
+      //   //       { code: '12', label: '西城区' },
+      //   //     ],
+      //   //   },
+      //   //   {
+      //   //     code: '2',
+      //   //     label: '上海市',
+      //   //     children: [
+      //   //       { code: '21', label: '杨浦区' },
+      //   //       { code: '22', label: '静安区' },
+      //   //     ],
+      //   //   },
+      //   // ],
+      //   required: true,
+      // },
     ],
   },
 };

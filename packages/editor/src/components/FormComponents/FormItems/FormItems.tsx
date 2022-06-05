@@ -68,6 +68,14 @@ const formTpl: TFormItemsDefaultType = [
     color: 'rgba(0,0,0,1)',
     required: true,
   },
+  {
+    id: '8',
+    type: 'Picker',
+    placeholder: '请选择',
+    // options: [],
+    label: '省市选择',
+    required: true,
+  },
 ];
 
 interface FormItemsProps {
@@ -165,6 +173,7 @@ const FormItems = (props: FormItemsProps) => {
                 <div className={styles.formTpl} style={{ color: 'red' }}>
                   {formTpl.map((item, i) => {
                     let FormItem = BasePopoverForm[item.type];
+                    console.log(item, 'popover');
                     return (
                       <div className={styles.formItem} key={i} onClick={() => handleAddItem(item)}>
                         <div
