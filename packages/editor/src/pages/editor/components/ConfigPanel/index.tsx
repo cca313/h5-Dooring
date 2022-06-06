@@ -2,7 +2,7 @@
  * @Author: Gavin Chan
  * @Date: 2022-05-26 15:16:38
  * @LastEditors: Gavin
- * @LastEditTime: 2022-06-01 11:50:35
+ * @LastEditTime: 2022-06-06 11:12:58
  * @FilePath: \legao\packages\editor\src\pages\editor\components\ConfigPanel\index.tsx
  * @Descriptions: todo
  */
@@ -69,7 +69,7 @@ const ConfigPanel = (props: IConfigPanelProps) => {
       });
     };
   }, [dispatch]);
-  console.log(curPoint, 'cur');
+  // console.log(curPoint, 'cur');
   return (
     <div
       ref={ref}

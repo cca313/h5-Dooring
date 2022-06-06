@@ -1,6 +1,6 @@
 import React, { memo, useEffect, FC } from 'react';
 import { Form, Select, Input, Modal, Button } from 'antd';
-import Upload from '../Upload';
+import ImgUpload from '../ImgUpload';
 import { Store } from 'antd/lib/form/interface';
 import { TDataListDefaultTypeItem } from '../FormEditor/types';
 // import styles from './index.less';
@@ -26,7 +26,7 @@ export type EditorModalProps = {
   cropRate: number;
 };
 
-const EditorModal: FC<EditorModalProps> = props => {
+const EditorModal: FC<EditorModalProps> = (props) => {
   const { item, onSave, visible, onCancel, cropRate } = props;
   const onFinish = (values: Store) => {
     console.log(values);
@@ -35,13 +35,13 @@ const EditorModal: FC<EditorModalProps> = props => {
   const handleOk = () => {
     form
       .validateFields()
-      .then(values => {
+      .then((values) => {
         if (item) {
           values.id = item.id;
           onSave && onSave(values);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   };
@@ -113,7 +113,7 @@ const EditorModal: FC<EditorModalProps> = props => {
               valuePropName="fileList"
               getValueFromEvent={normFile}
             >
-              <Upload cropRate={cropRate} isCrop />
+              <ImgUpload cropRate={cropRate} isCrop />
             </Form.Item>
           </Form>
         </Modal>

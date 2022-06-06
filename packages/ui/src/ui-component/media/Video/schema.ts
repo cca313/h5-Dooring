@@ -1,14 +1,24 @@
-import {
+/*
+ * @Author: Gavin Chan
+ * @Date: 2022-05-20 16:03:56
+ * @LastEditors: Gavin
+ * @LastEditTime: 2022-06-06 18:26:50
+ * @FilePath: \legao\packages\ui\src\ui-component\media\Video\schema.ts
+ * @Descriptions: todo
+ */
+import type {
   ITextConfigType,
-  IUploadConfigType,
+  IImgUploadConfigType,
+  IVodUploadConfigType,
   TTextDefaultType,
-  TUploadDefaultType,
+  TImgUploadDefaultType,
+  TVodUploadDefaultType,
 } from '@/components/FormComponents/types';
 
-export type TVideoEditData = Array<IUploadConfigType | ITextConfigType>;
+export type TVideoEditData = (IImgUploadConfigType | IVodUploadConfigType)[];
 export interface IVideoConfig {
-  poster: TUploadDefaultType;
-  url: TTextDefaultType;
+  poster: TImgUploadDefaultType;
+  url: TVodUploadDefaultType;
 }
 
 export interface IVideoSchema {
@@ -21,12 +31,12 @@ const Video: IVideoSchema = {
     {
       key: 'poster',
       name: '视频封面',
-      type: 'Upload',
+      type: 'ImgUpload',
     },
     {
       key: 'url',
-      name: '视频链接',
-      type: 'Text',
+      name: '视频上传',
+      type: 'VodUpload',
     },
   ],
   config: {
@@ -38,7 +48,7 @@ const Video: IVideoSchema = {
         url: 'http://49.234.61.19/uploads/1_1740c6fbcd9.png',
       },
     ],
-    url: '',
+    url: [],
   },
 };
 

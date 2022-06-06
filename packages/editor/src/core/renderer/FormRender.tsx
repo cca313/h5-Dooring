@@ -1,6 +1,6 @@
 import React, { memo, RefObject, useEffect } from 'react';
 import { Form, Select, InputNumber, Input, Switch, Radio } from 'antd';
-import Upload from '../../components/FormComponents/Upload';
+import ImgUpload from '../../components/FormComponents/ImgUpload';
 import DataList from '../../components/FormComponents/DataList';
 import MutiText from '../../components/FormComponents/MutiText';
 import Color from '../../components/FormComponents/Color';
@@ -10,6 +10,7 @@ import Pos from '../../components/FormComponents/Pos';
 import { Store } from 'antd/lib/form/interface';
 import RichText from '../../components/FormComponents/XEditor';
 import FormItems from '../../components/FormComponents/FormItems';
+import VodUpload from '@/components/FormComponents/vodUpload';
 const normFile = (e: any) => {
   console.log('Upload event:', e);
   if (Array.isArray(e)) {
@@ -128,14 +129,24 @@ const FormEditor = (props: FormEditorProps) => {
                 <Switch />
               </Form.Item>
             )}
-            {item.type === 'Upload' && (
+            {item.type === 'ImgUpload' && (
               <Form.Item
                 label={item.name}
                 name={item.key}
                 valuePropName="fileList"
                 getValueFromEvent={normFile}
               >
-                <Upload cropRate={item.cropRate} isCrop={item.isCrop} />
+                <ImgUpload cropRate={item.cropRate} isCrop={item.isCrop} />
+              </Form.Item>
+            )}
+            {item.type === 'VodUpload' && (
+              <Form.Item
+                label={item.name}
+                name={item.key}
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+              >
+                <VodUpload />
               </Form.Item>
             )}
             {item.type === 'CardPicker' && (

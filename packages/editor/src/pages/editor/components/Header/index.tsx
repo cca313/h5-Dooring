@@ -95,7 +95,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
             <span>模版名称：</span>
             <Input ref={iptRef} />
           </div>
-          <div className={styles.formIpt}>
+          {/* <div className={styles.formIpt}>
             <span>封面设置：</span>
             <Button
               type="primary"
@@ -108,11 +108,11 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
             <Button size="small" onClick={() => generateFace(0)}>
               使用默认封面
             </Button>
-          </div>
-          <div className={styles.formIpt}>
+          </div> */}
+          {/* <div className={styles.formIpt}>
             <span>访问链接：</span>
             <Input disabled value="暂未开放，保存之后可以在模版库中访问" />
-          </div>
+          </div> */}
         </div>
       ),
       okText: '保存',
@@ -260,7 +260,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           onClick={handleSaveTpl}
           disabled={!pointData.length}
         >
-          保存模版
+          保存
         </Button>
         {/* <Upload {...uploadprops}>
           <Button type="link" style={{ marginRight: '8px' }}>
@@ -293,7 +293,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         >
           <FileAddOutlined />
         </Button> */}
-        <MyPopover content={content()} directions="BOTTOM">
+        {/* <MyPopover content={content()} directions="BOTTOM">
           <Button
             type="link"
             style={{ marginRight: '9px' }}
@@ -302,7 +302,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           >
             <MobileOutlined />
           </Button>
-        </MyPopover>
+        </MyPopover> */}
         <Button
           type="link"
           style={{ marginRight: '9px' }}
@@ -324,7 +324,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         <Button type="link" style={{ marginRight: '9px' }} title="重做" onClick={redohandler}>
           <RedoOutlined />
         </Button>
-        <Tooltip placement="bottom" title="一键生成海报分享图">
+        {/* <Tooltip placement="bottom" title="一键生成海报分享图">
           <Badge dot offset={[-18, 10]}>
             <Button
               type="link"
@@ -335,7 +335,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
               <InstagramOutlined />
             </Button>
           </Badge>
-        </Tooltip>
+        </Tooltip> */}
         <Button type="link" onClick={toPreview} disabled={!pointData.length}>
           预览
         </Button>
@@ -368,7 +368,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           会员登录
         </Button>
       </div> */}
-      <Modal
+      {/* <Modal
         title="生成封面中...(长时间未反应请点右侧按钮重试)"
         visible={showModalIframe}
         footer={null}
@@ -393,7 +393,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         onCancel={() => setShowFaceModal(false)}
       >
         <img src={faceUrl} style={{ width: '100%' }} />
-      </Modal>
+      </Modal> */}
     </div>
   );
 });

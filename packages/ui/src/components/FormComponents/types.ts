@@ -1,13 +1,26 @@
 ////////////////////
-export interface IUploadConfigType {
+export interface IImgUploadConfigType {
   key: string;
   name: string;
-  type: 'Upload';
+  type: 'ImgUpload';
   isCrop?: boolean;
   cropRate?: number;
 }
 
-export type TUploadDefaultType = {
+export interface IVodUploadConfigType {
+  key: string;
+  name: string;
+  type: 'VodUpload';
+}
+
+export type TImgUploadDefaultType = {
+  uid: string;
+  name: string;
+  status: string;
+  url: string;
+}[];
+
+export type TVodUploadDefaultType = {
   uid: string;
   name: string;
   status: string;
