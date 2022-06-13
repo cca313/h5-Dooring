@@ -96,6 +96,8 @@ const Container = (props: {
 
   const clearData = useCallback(() => {
     dispatch({ type: 'editorModal/clearAll' });
+    dispatch({ type: 'modal/clearAll' })
+    setActiveCanvas('default_canvas')
   }, [dispatch]);
 
   // const handleFormSave = useMemo(() => {

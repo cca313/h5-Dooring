@@ -312,7 +312,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         >
           <DeleteOutlined />
         </Button>
-        <Button
+        {/* <Button
           type="link"
           style={{ marginRight: '9px' }}
           title="撤销"
@@ -323,7 +323,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         </Button>
         <Button type="link" style={{ marginRight: '9px' }} title="重做" onClick={redohandler}>
           <RedoOutlined />
-        </Button>
+        </Button> */}
         {/* <Tooltip placement="bottom" title="一键生成海报分享图">
           <Badge dot offset={[-18, 10]}>
             <Button
@@ -336,9 +336,9 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
             </Button>
           </Badge>
         </Tooltip> */}
-        <Button type="link" onClick={toPreview} disabled={!pointData.length}>
+        {/* <Button type="link" onClick={toPreview} disabled={!pointData.length}>
           预览
-        </Button>
+        </Button> */}
         {/* <Button
           type="link"
           style={{ marginRight: '5px' }}

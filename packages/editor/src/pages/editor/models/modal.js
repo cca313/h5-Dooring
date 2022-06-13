@@ -142,12 +142,14 @@ export default {
       return state;
     },
     clearAll(state) {
-      overSave(LOCAL_MODAL_KEY, []);
-      return {
-        ...state,
-        pointData: [],
-        curPoint: null,
-      };
+      state.modals = []
+      // overSave(LOCAL_MODAL_KEY, []);
+      // return {
+      //   ...state,
+      //   pointData: [],
+      //   curPoint: null,
+      // };
+      
     },
   },
   effects: {},
