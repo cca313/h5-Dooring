@@ -24,7 +24,7 @@ const VideoPlayer = memo((props: IVideoConfig & { isTpl: boolean }) => {
           <Player
             playsInline
             poster={poster[0].url}
-            src={video[0].url || 'https://gossv.vcg.com/cmsUploadVideo/creative/1移轴/7月移轴.mp4'}
+            src={video[0].url}
           >
             <BigPlayButton style={{ display: 'none' }} position="center" />
           </Player>
