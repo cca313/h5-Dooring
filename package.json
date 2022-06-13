@@ -1,11 +1,11 @@
 {
-"name": "h5-dooring",
-  "version": "1.4.0",
-  "description": "H5-Dooring是一款功能强大，开源免费的H5可视化页面配置解决方案，致力于提供一套简单方便、专业可靠、无限可能的H5落地页最佳实践。技术栈以react为主， 后台采用nodejs开发。",
+  "name": "legao",
+  "version": "0.0.1",
+  "description": "legao system",
   "private": false,
   "author": {
-    "name": "徐小夕",
-    "email": "xujiang156@qq.com",
+    "name": "gavin",
+    "email": "cca313@gmail.com",
     "url": "http://h5.dooring.cn"
   },
   "keywords": [
@@ -15,11 +15,6 @@
     "antd",
     "react-dnd",
     "web visible"
-  ],
-  "contributors": [
-    "徐小夕 <xujiang156@qq.com> (https://github.com/MrXujiang))",
-    "mokinzhao <37622852@qq.com> (https://github.com/mokinzhao))",
-    "yehuozhili <yehuozhili@outlook.com> (https://github.com/yehuozhili))"
   ],
   "scripts": {
     "pkg": "bash install.sh",
@@ -40,7 +35,6 @@
     "test:coverage": "umi-test --coverage",
     "nocompress": "cross-env RM_TMPDIR=none COMPRESS=none umi build"
   },
-
   "homepage": "http://h5.dooring.cn",
   "repository": {
     "type": "git",

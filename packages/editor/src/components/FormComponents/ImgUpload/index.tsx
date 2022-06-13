@@ -101,10 +101,13 @@ class PicturesWall extends React.Component<PicturesWallType> {
 
   handleChange = ({ file, fileList }: UploadChangeParam<UploadFile<any>>) => {
     this.setState({ fileList });
-    if (file.status === 'done') {
+    console.log(file,fileList)
+    
+    if (file.status === 'done' && file.response.success === true) {
+      message.success('图片上传成功')
       const files = fileList.map(item => {
         const { uid, name, status } = item;
-        const url = item.url || item.response.result.url;
+        const url = item.url || item.response.data.url;
         return { uid, name, status, url };
       });
       this.props.onChange && this.props.onChange(files);
@@ -147,9 +150,10 @@ class PicturesWall extends React.Component<PicturesWallType> {
       curSelectedImg,
     } = this.state;
     const {
-      action = isDev ? 'http://192.168.1.8:3000/api/v0/files/upload/free' : '你的服务器地址',
+      // todo prodction api
+      action = isDev ? 'http://114.215.182.175:8208/common-server/aliFile/upLoadFileNoSecret' : '你的服务器地址',
       headers,
-      withCredentials = true,
+      withCredentials = false,
       maxLen = 1,
       cropRate = 375 / 158,
       isCrop,
@@ -183,12 +187,13 @@ class PicturesWall extends React.Component<PicturesWallType> {
               className={styles.avatarUploader}
               action={action}
               withCredentials={withCredentials}
-              headers={{
-                'x-requested-with': localStorage.getItem('user') || '',
-                authorization: localStorage.getItem('token') || '',
-                ...headers,
-              }}
+              // headers={{
+              //   'x-requested-with': localStorage.getItem('user') || '',
+              //   authorization: localStorage.getItem('token') || '',
+              //   ...headers,
+              // }}
               beforeUpload={this.handleBeforeUpload}
+              data={{'busiName': 60}}
             >
               {fileList.length >= maxLen ? null : uploadButton}
             </Upload>
@@ -203,19 +208,20 @@ class PicturesWall extends React.Component<PicturesWallType> {
             className={styles.avatarUploader}
             action={action}
             withCredentials={withCredentials}
-            headers={{
-              'x-requested-with': localStorage.getItem('user') || '',
-              authorization: localStorage.getItem('token') || '',
-              ...headers,
-            }}
+            // headers={{
+            //   'x-requested-with': localStorage.getItem('user') || '',
+            //   authorization: localStorage.getItem('token') || '',
+            //   ...headers,
+            // }}
             beforeUpload={this.handleBeforeUpload}
+            data={{'busiName': 60}}
           >
             {fileList.length >= maxLen ? null : uploadButton}
           </Upload>
         )}
-        <div className={styles.wallBtn} onClick={this.handleWallShow}>
+        {/* <div className={styles.wallBtn} onClick={this.handleWallShow}>
           图片库
-        </div>
+        </div> */}
         <Modal
           visible={previewVisible}
           title={previewTitle}

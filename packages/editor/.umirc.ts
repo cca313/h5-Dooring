@@ -22,7 +22,7 @@ export default defineConfig({
   },
   // devtool: 'source-map',
   antd: {},
-  title: 'h5-dooring',
+  title: '乐高-可视化搭建系统',
   // exportStatic: {},
   base: '/',
   publicPath: '/',
