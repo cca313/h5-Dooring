@@ -75,7 +75,7 @@ const ModalForm = (props: IModalForm) => {
   /* 弹窗中的表单 */
   /* preserve forcerender effect中resetfields */
   return (
-    <Modal title={title || '新增弹窗'} visible={visible} forceRender footer={renderFooter()}>
+    <Modal title={title || '新增弹窗'} visible={visible} forceRender footer={renderFooter()} onCancel={handleModalCancel} >
       <Form
         form={form}
         layout="vertical"

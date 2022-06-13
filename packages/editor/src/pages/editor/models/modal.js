@@ -87,30 +87,27 @@ export default {
       };
     },
     copyPointData(state, { payload }) {
-      const { id } = payload;
-      const pointData = [];
-      state.pointData.forEach((item) => {
-        pointData.push({ ...item });
-        if (item.id === id) {
-          pointData.push({ ...item, id: uuid(6, 10) });
-        }
-      });
-      overSave(LOCAL_MODAL_KEY, pointData);
+      const { id, canvasId } = payload;
 
-      return {
-        ...state,
-        pointData,
-      };
+      const targetCanvas = state.modals.filter((modal) => modal.id == canvasId)[0]
+      const targetCanvasIdx = state.modals.findIndex((modal) =>  modal.id == canvasId)
+      const targetPoint = targetCanvas.pointData.filter((point) => point.id == id)[0]
+      targetCanvas.pointData.push({...targetPoint, id: uuid(6,10)})
+      state.modals[targetCanvasIdx] = targetCanvas
+
     },
     delPointData(state, { payload }) {
-      const { id } = payload;
-      const pointData = state.pointData.filter((item) => item.id !== id);
-      overSave(LOCAL_MODAL_KEY, pointData);
-      return {
-        ...state,
-        pointData,
-        curPoint: null,
-      };
+      const { id, canvasId } = payload;
+      // const targetCanvas = state.modals.filter((modal) => modal.id == canvasId)[0]
+      const targetCanvasIdx = state.modals.findIndex((modal) =>  modal.id == canvasId)
+      const targetPointIdx = state.modals[targetCanvasIdx].pointData.findIndex((point) => point.id == id)
+      state.modals[targetCanvasIdx].pointData.splice(targetPointIdx,1)
+      // overSave(LOCAL_MODAL_KEY, pointData);
+      // return {
+      //   ...state,
+      //   pointData,
+      //   curPoint: null,
+      // };
     },
     keyboardCopyPointData(state) {
       if (state.curPoint) {

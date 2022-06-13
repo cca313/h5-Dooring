@@ -12,8 +12,9 @@ import styles from './index.less';
 import 'react-contexify/dist/ReactContexify.min.css';
 
 interface SourceBoxProps {
-  pstate: { pointData: { id: string; item: any; point: any; isMenu?: any }[]; curPoint: any };
-  cstate: { pointData: { id: string; item: any; point: any }[]; curPoint: any };
+  // pstate: { pointData: { id: string; item: any; point: any; isMenu?: any }[]; curPoint: any };
+  // cstate: { pointData: { id: string; item: any; point: any }[]; curPoint: any };
+  canvasData: { id:string, config: any, pointData: { id: string; item: any; point: any }[]; curPoint: any }
   scaleNum: number;
   canvasId: string;
   allType: string[];
@@ -28,7 +29,7 @@ interface SourceBoxProps {
 }
 const ViewRender = React.lazy(() => import('dooringUI/viewRender'));
 const TargetBox = memo((props: SourceBoxProps) => {
-  const { pstate, scaleNum, canvasId, allType, dragState, setDragState, cstate } = props;
+  const { canvasData, scaleNum, canvasId, allType, dragState, setDragState } = props;
   const modalData = useSelector((state: any) =>
     state.present.modal.modals.filter((modal: any) => modal.id == canvasId),
   );
@@ -101,19 +102,19 @@ const TargetBox = memo((props: SourceBoxProps) => {
   }, [dispatch, pointData]);
 
   const handleContextMenuDel = () => {
-    if (pstate.curPoint) {
+    if (canvasData.curPoint) {
       dispatch({
         type: 'modal/delPointData',
-        payload: { id: pstate.curPoint.id },
+        payload: { id: canvasData.curPoint.id, canvasId: canvasId  },
       });
     }
   };
 
   const handleContextMenuCopy = () => {
-    if (pstate.curPoint) {
+    if (canvasData.curPoint) {
       dispatch({
         type: 'modal/copyPointData',
-        payload: { id: pstate.curPoint.id },
+        payload: { id: canvasData.curPoint.id, canvasId: canvasId },
       });
     }
   };

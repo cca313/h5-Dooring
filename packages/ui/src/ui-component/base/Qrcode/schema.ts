@@ -29,7 +29,7 @@ const Qrcode: IQrcodeSchema = {
     {
       key: 'qrcode',
       name: '二维码',
-      type: 'Upload',
+      type: 'ImgUpload',
       isCrop: true,
       cropRate: 1,
     },

@@ -385,49 +385,6 @@ const Container = (props: {
           }}
         ></div>
         <InfiniteCanvas accepts={allType} activeCanvas={activeCanvas} />
-        {/* <div
-          className={styles.tickMark}
-          id="calibration"
-          ref={containerRef}
-          onMouseDown={mousedownfn}
-          onMouseMove={throttle(mousemovefn, 500)}
-          onMouseUp={mouseupfn}
-          onMouseLeave={mouseupfn}
-          onWheel={onwheelFn}
-        >
-          <div className={styles.tickMarkTop}>
-            <Calibration direction="up" id="calibrationUp" multiple={scaleNum} />
-          </div>
-          <div className={styles.tickMarkLeft}>
-            <Calibration direction="right" id="calibrationRight" multiple={scaleNum} />
-          </div>
-
-          <div>
-            {canvasPanels.map((panel, i) => {
-              if (panel === canvasId) {
-                return (
-                  <SourceBox
-                    dragState={dragstate}
-                    setDragState={setDragState}
-                    scaleNum={scaleNum}
-                    canvasId={canvasId}
-                    allType={allType}
-                  />
-                );
-              } else {
-                <ModalBox
-                  dragState={dragModalstate}
-                  setDragState={setModalDragState}
-                  scaleNum={scaleNum}
-                  canvasId={`modal-canvas-${i}`}
-                  allType={allType}
-                />;
-              }
-            })}
-          </div>
-          <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} />
-        </div> */}
-        {/* {renderRight} */}
         <ConfigPanel visible={rightColla} setVisible={setRightColla} activeCanvas={activeCanvas} />
         <div
           className={styles.rightcolla}

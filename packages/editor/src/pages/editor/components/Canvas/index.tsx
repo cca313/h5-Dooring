@@ -121,7 +121,6 @@ const InfiniteCanvas = (props: ICanvasProps) => {
         />
       </div>
       {/* 画布 */}
-
       <div>
         {activeCanvas == 'default_canvas' && (
           <TargetBox
@@ -133,7 +132,6 @@ const InfiniteCanvas = (props: ICanvasProps) => {
           />
         )}
         {modals.map((modal: any, i: any) => {
-          console.log(modal.id, activeCanvas);
           return (
             activeCanvas == modal.id && (
               <ModalBox
@@ -142,33 +140,12 @@ const InfiniteCanvas = (props: ICanvasProps) => {
                 setDragState={setDragState}
                 scaleNum={CONSTANTS.CANVAS_SCALE_NUM}
                 canvasId={modal.id}
+                canvasData={modal}
                 allType={accepts}
               />
             )
           );
         })}
-        {/* {canvasPanels.map((panel, i) => {
-        if (panel === canvasId) {
-          return (
-            <SourceBox
-              dragState={dragstate}
-              setDragState={setDragState}
-              scaleNum={scaleNum}
-              canvasId={canvasId}
-              allType={allType}
-            />
-          );
-        } else {
-          <ModalBox
-            dragState={dragModalstate}
-            setDragState={setModalDragState}
-            scaleNum={scaleNum}
-            canvasId={`modal-canvas-${i}`}
-            allType={allType}
-          />;
-        }
-      })} */}
-        {/* 切换画布 */}
       </div>
       {/* 快捷键浮窗 */}
       {/* <CanvasControl scaleNum={scaleNum} handleSlider={handleSlider} backSize={backSize} /> */}
