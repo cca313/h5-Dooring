@@ -152,7 +152,7 @@ const Image: IImageSchema = {
     {
       key: 'imgUrl',
       name: '上传图片',
-      type: 'Upload',
+      type: 'ImgUpload',
       isCrop: false,
     },
     {

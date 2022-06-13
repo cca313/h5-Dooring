@@ -5,8 +5,8 @@ import Map from './Map/schema';
 
 const mediaSchema = {
   Video,
-  Audio,
-  Calendar,
-  Map,
+  // Audio,
+  // Calendar,
+  // Map,
 };
 export default mediaSchema;
