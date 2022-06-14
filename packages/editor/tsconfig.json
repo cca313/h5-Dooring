@@ -18,6 +18,7 @@
       "assets/*": ["src/assets/*"]
     },
     "allowSyntheticDefaultImports": true,
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noEmit": true,

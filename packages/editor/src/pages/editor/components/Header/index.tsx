@@ -15,14 +15,17 @@ import {
   InstagramOutlined,
   WechatOutlined,
 } from '@ant-design/icons';
-import { history } from 'umi';
-import QRCode from 'qrcode.react';
-import { saveAs } from 'file-saver';
-import req from '@/utils/req';
-import { uuid } from '@/utils/tool';
-import styles from './index.less';
 import MyPopover from 'yh-react-popover';
 import { encode } from 'querystring';
+import QRCode from 'qrcode.react';
+import { saveAs } from 'file-saver';
+import { history, useSelector } from 'umi';
+import { uuid } from '@/utils/tool';
+import req from '@/utils/req';
+import ModalSaveForm from './ModalSave'
+import { AddOrUpdateCanvas } from '../../services/editorService.js'
+
+import styles from './index.less';
 
 const { confirm } = Modal;
 
@@ -42,6 +45,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
   const [showModalIframe, setShowModalIframe] = useState(false);
   const [showFaceModal, setShowFaceModal] = useState(false);
   const [faceUrl, setFaceUrl] = useState('');
+  const [modalSaveFormShow, setModalSaveForm] = useState(false)
   const iptRef = useRef<Input>(null);
 
   const toPreview = () => {
@@ -75,9 +79,8 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
     const { tid } = location.query || '';
     return (
       <QRCode
-        value={`${window.location.protocol}//http://localhost:8008/preview?tid=${
-          props.location.query.tid
-        }&pointData=${JSON.stringify(pointData)}`}
+        value={`${window.location.protocol}//http://localhost:8008/preview?tid=${props.location.query.tid
+          }&pointData=${JSON.stringify(pointData)}`}
       />
     );
   };
@@ -92,7 +95,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
       content: (
         <div className={styles.saveForm}>
           <div className={styles.formIpt}>
-            <span>模版名称：</span>
+            <span>营销页名称：</span>
             <Input ref={iptRef} />
           </div>
           {/* <div className={styles.formIpt}>
@@ -235,6 +238,18 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
     (document.getElementById('previewPage') as any).contentWindow.location.reload();
   };
 
+  const selector = useSelector((state: any) => state.present)
+  const { editorModal, modal: { modals } } = selector
+  const handleSaveFormConfirm = (values: any) => {
+    setModalSaveForm(false)
+    // 去除schema中多余数据
+    const canvasComponents = editorModal.pointData.map((point: any) => point.item)
+    const modalsComponents = modals.map((modal: any) => Object.assign({}, { config: modal.config }, { components: modal.pointData }))
+    const { id } = props.location.query || ""
+    const params = { ...values, id, pageJson: Object.assign({}, { page: canvasComponents }, { modal: modalsComponents }) }
+    console.log(params, id)
+  }
+
   return (
     <div className={styles.header}>
       <div className={styles.logoArea}>
@@ -255,9 +270,9 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
           模版库
         </Button> */}
         <Button
-          type="link"
+          type='primary'
           style={{ marginRight: '9px' }}
-          onClick={handleSaveTpl}
+          onClick={() => setModalSaveForm(true)}
           disabled={!pointData.length}
         >
           保存
@@ -305,6 +320,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
         </MyPopover> */}
         <Button
           type="link"
+          // shape='circle'
           style={{ marginRight: '9px' }}
           title="清空"
           onClick={deleteAll}
@@ -394,6 +410,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
       >
         <img src={faceUrl} style={{ width: '100%' }} />
       </Modal> */}
+      <ModalSaveForm visible={modalSaveFormShow} onConfirm={handleSaveFormConfirm} onCancel={() => setModalSaveForm(false)} />
     </div>
   );
 });
