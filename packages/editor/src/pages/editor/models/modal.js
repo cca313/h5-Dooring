@@ -26,9 +26,12 @@ export default {
       // modals.push(payload);
       // return [modals];
     },
+    setModalData(state, { payload }) {
+      state.modals = payload;
+    },
     addPointData(state, { payload }) {
       let pointData = [...state.pointData, payload];
-      overSave(LOCAL_MODAL_KEY, pointData);
+      // overSave(LOCAL_MODAL_KEY, pointData);
       return {
         ...state,
         pointData,
@@ -79,7 +82,7 @@ export default {
       // };
     },
     importTplData(state, { payload }) {
-      overSave(LOCAL_MODAL_KEY, payload);
+      // overSave(LOCAL_MODAL_KEY, payload);
       return {
         ...state,
         pointData: payload,
@@ -89,19 +92,20 @@ export default {
     copyPointData(state, { payload }) {
       const { id, canvasId } = payload;
 
-      const targetCanvas = state.modals.filter((modal) => modal.id == canvasId)[0]
-      const targetCanvasIdx = state.modals.findIndex((modal) =>  modal.id == canvasId)
-      const targetPoint = targetCanvas.pointData.filter((point) => point.id == id)[0]
-      targetCanvas.pointData.push({...targetPoint, id: uuid(6,10)})
-      state.modals[targetCanvasIdx] = targetCanvas
-
+      const targetCanvas = state.modals.filter((modal) => modal.id == canvasId)[0];
+      const targetCanvasIdx = state.modals.findIndex((modal) => modal.id == canvasId);
+      const targetPoint = targetCanvas.pointData.filter((point) => point.id == id)[0];
+      targetCanvas.pointData.push({ ...targetPoint, id: uuid(6, 10) });
+      state.modals[targetCanvasIdx] = targetCanvas;
     },
     delPointData(state, { payload }) {
       const { id, canvasId } = payload;
       // const targetCanvas = state.modals.filter((modal) => modal.id == canvasId)[0]
-      const targetCanvasIdx = state.modals.findIndex((modal) =>  modal.id == canvasId)
-      const targetPointIdx = state.modals[targetCanvasIdx].pointData.findIndex((point) => point.id == id)
-      state.modals[targetCanvasIdx].pointData.splice(targetPointIdx,1)
+      const targetCanvasIdx = state.modals.findIndex((modal) => modal.id == canvasId);
+      const targetPointIdx = state.modals[targetCanvasIdx].pointData.findIndex(
+        (point) => point.id == id,
+      );
+      state.modals[targetCanvasIdx].pointData.splice(targetPointIdx, 1);
       // overSave(LOCAL_MODAL_KEY, pointData);
       // return {
       //   ...state,
@@ -119,7 +123,7 @@ export default {
             pointData.push({ ...item, id: uuid(6, 10) });
           }
         });
-        overSave(LOCAL_MODAL_KEY, pointData);
+        // overSave(LOCAL_MODAL_KEY, pointData);
 
         return {
           ...state,
@@ -132,7 +136,7 @@ export default {
       if (state.curPoint) {
         const { id } = state.curPoint;
         const pointData = state.pointData.filter((item) => item.id !== id);
-        overSave(LOCAL_MODAL_KEY, pointData);
+        // overSave(LOCAL_MODAL_KEY, pointData);
         return {
           ...state,
           pointData,
@@ -142,14 +146,13 @@ export default {
       return state;
     },
     clearAll(state) {
-      state.modals = []
+      state.modals = [];
       // overSave(LOCAL_MODAL_KEY, []);
       // return {
       //   ...state,
       //   pointData: [],
       //   curPoint: null,
       // };
-      
     },
   },
   effects: {},

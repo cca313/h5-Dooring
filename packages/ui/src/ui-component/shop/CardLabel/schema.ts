@@ -42,7 +42,7 @@ const CardLabel: ICardSchema = {
     {
       key: 'imgUrl',
       name: '图片',
-      type: 'Upload',
+      type: 'ImgUpload',
     },
     {
       key: 'title',

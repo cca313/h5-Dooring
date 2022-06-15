@@ -66,7 +66,7 @@ const ZhuanLan: ICardSchema = {
     {
       key: 'imgUrl',
       name: '专栏图片',
-      type: 'Upload',
+      type: 'ImgUpload',
       isCrop: true,
       cropRate: 1,
     },
@@ -130,3 +130,4 @@ const ZhuanLan: ICardSchema = {
 };
 
 export default ZhuanLan;
+

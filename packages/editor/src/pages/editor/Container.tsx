@@ -17,9 +17,10 @@ import CanvasTabs from './components/CanvasTabs';
 import TargetBox from './SourceBox';
 import InfiniteCanvas from './components/Canvas';
 import NewModalForm from './components/NewModalForm';
+import ConfigPanel from './components/ConfigPanel';
+import { getCanvasData } from './services/editorService'
 
 import styles from './index.less';
-import ConfigPanel from './components/ConfigPanel';
 
 const { TabPane } = Tabs;
 const { template, mediaTpl, graphTpl, shopTpl, schemaH5 } = dooringCompt;
@@ -34,6 +35,7 @@ const Container = (props: {
 }) => {
   const canvasId = 'default_canvas';
   const [scaleNum, setScale] = useState(1);
+  const [pageConfig, setPageConfig] = useState({})
   const [initialModalValues, setInitialValues] = useState({
     name: '',
     title: '',
@@ -93,6 +95,21 @@ const Container = (props: {
   //     }
   //   };
   // }, []);
+
+  useEffect(() => {
+    const { id } = props.location.query
+    getCanvasData(id).then((res) => {
+      console.log(res);
+      const { data: { data } } = res
+      const { courseName, courseType, coursePrice, id, pageName, pageJson } = data
+      const pageConf = { courseName, courseType, coursePrice, id, pageName, pageJson }
+      const modal = pageJson.modal
+      const page = pageJson.page
+      setPageConfig(pageConf)
+      // dispatch({type: 'editorModal/setPointData', payload: page})
+      // dispatch({type: 'modal/setModalData', payload: modal})
+    })
+  }, [])
 
   const clearData = useCallback(() => {
     dispatch({ type: 'editorModal/clearAll' });
@@ -343,6 +360,8 @@ const Container = (props: {
         clearData={clearData}
         location={props.location}
         importTpl={importTpl}
+        pageConfig={pageConfig}
+        setPageConfig={setPageConfig}
       />
       <div className={styles.container}>
         <div

@@ -21,7 +21,7 @@
     "yehuozhili <yehuozhili@outlook.com> (https://github.com/yehuozhili))"
   ],
   "scripts": {
-    "start": "umi dev",
+    "start": "UMI_ENV=dev umi dev",
     "build": "umi build",
     "server": "node server.js",
     "dev": "http-server dist",

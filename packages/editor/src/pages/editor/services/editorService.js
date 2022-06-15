@@ -1,14 +1,15 @@
-import req from '@/utils/req'
-import $axios from 'axios'
-const API_DOMAIN = 'http://testadver.hxledu.com'
+import req from '@/utils/req';
+import $axios from 'axios';
+// const API_DOMAIN = 'http://testadver.hxledu.com'
+
 export function getTemplate(data) {
-  return req('/test', { method: 'GET', params: data })
+  return req('/test', { method: 'GET', params: data });
 }
 
 export function getCanvasData(canvasId) {
-  return $axios.get()
+  return req(`/adver-core/pc/pxMarket/getMarketPageInfo`, { params: { pageId: canvasId } });
 }
 
 export function AddOrUpdateCanvas(data) {
-  return $axios.post(`${API_DOMAIN}/plat/adver-core/pc/pxMarket/addMarketPage`,data)
-} 
+  return req(`/adver-core/pc/pxMarket/addMarketPage`, data);
+}

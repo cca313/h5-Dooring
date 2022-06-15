@@ -48,7 +48,7 @@ let html = `<!DOCTYPE html>
 </html>
 `;
 
-export default function() {
+export default function () {
   const [isUpdate, setUpdate] = useState(false);
   const [cursor, setCursor] = useState<CodeMirror.Position>({ line: 1, ch: 1 });
   const [data, setData] = useState<{ data: string }>({ data: html });

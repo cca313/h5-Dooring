@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector } from 'umi';
-import Calibration from 'components/Calibration';
+import Calibration from '../../../../components/Calibration';
 import { throttle, detectMobileBrowser, getBrowserNavigatorMetaInfo } from '@/utils/tool';
 
 import CONSTANTS from '@/utils/CONSTANTS';

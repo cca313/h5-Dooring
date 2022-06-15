@@ -47,7 +47,7 @@ const Header: IHeaderSchema = {
     {
       key: 'logo',
       name: 'logo',
-      type: 'Upload',
+      type: 'ImgUpload',
       isCrop: true,
       cropRate: 1000 / 618,
     },
@@ -86,3 +86,4 @@ const Header: IHeaderSchema = {
 };
 
 export default Header;
+

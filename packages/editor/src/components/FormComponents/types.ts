@@ -2,7 +2,7 @@
 export interface IUploadConfigType {
   key: string;
   name: string;
-  type: 'Upload';
+  type: 'ImgUpload';
   isCrop?: boolean;
   cropRate?: number;
 }

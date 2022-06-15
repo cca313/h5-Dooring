@@ -1,17 +1,23 @@
 import { Form, Input, Modal, Radio } from "antd"
+import { useEffect } from "react";
 
 interface IModalSaveFormProps {
   visible: boolean;
+  initialValues: any;
   onConfirm: (values: any) => void;
   onCancel: () => void;
 }
 
 const ModalSaveForm: React.FC<IModalSaveFormProps> = ({
   visible,
+  initialValues,
   onConfirm,
   onCancel,
 }) => {
   const [form] = Form.useForm();
+  useEffect(() => {
+    form.resetFields()
+  }, [visible])
   return (
     <Modal
       visible={visible}
@@ -35,7 +41,8 @@ const ModalSaveForm: React.FC<IModalSaveFormProps> = ({
         form={form}
         layout="vertical"
         name="form_save_template"
-        initialValues={{ modifier: 'public' }}
+        initialValues={initialValues}
+        preserve={false}
       >
         <Form.Item
           name="courseName"
@@ -52,8 +59,8 @@ const ModalSaveForm: React.FC<IModalSaveFormProps> = ({
         </Form.Item>
         <Form.Item name="courseType" label="课程类型" rules={[{ required: true, message: '请输入课程名称' }]}>
           <Radio.Group>
-            <Radio value={1}>付费</Radio>
-            <Radio value={0}>免费</Radio>
+            <Radio value={2}>付费</Radio>
+            <Radio value={1}>免费</Radio>
           </Radio.Group>
         </Form.Item>
       </Form>

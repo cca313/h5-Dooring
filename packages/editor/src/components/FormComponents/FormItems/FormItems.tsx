@@ -91,7 +91,7 @@ const FormItems = (props: FormItemsProps) => {
   const [visible, setVisible] = useState(false);
   const [curItem, setCurItem] = useState<baseFormUnion>();
   const [force, setforce] = useState<{ force: Function }>({
-    force: () => {},
+    force: () => { },
   });
 
   const handleAddItem = (item: baseFormUnion) => {
@@ -103,7 +103,7 @@ const FormItems = (props: FormItemsProps) => {
   };
 
   const handleEditItem = (item: baseFormUnion) => {
-    console.log(item, 'item');
+    // console.log(item, 'item');
     setVisible(true);
     setCurItem(item);
   };
@@ -122,7 +122,7 @@ const FormItems = (props: FormItemsProps) => {
   };
 
   const callback = useCallback((v: Function) => {
-    console.log(v);
+    // console.log(v);
     setforce({ force: v });
   }, []);
 
@@ -141,7 +141,7 @@ const FormItems = (props: FormItemsProps) => {
       }
     };
   }, [force, rightPannelRef]);
-  console.log(curItem);
+  // console.log(curItem);
   return (
     <div className={styles.formItemWrap}>
       <div className={styles.formTitle}>表单控件</div>
@@ -173,7 +173,7 @@ const FormItems = (props: FormItemsProps) => {
                 <div className={styles.formTpl} style={{ color: 'red' }}>
                   {formTpl.map((item, i) => {
                     let FormItem = BasePopoverForm[item.type];
-                    console.log(item, 'popover');
+                    // console.log(item, 'popover');
                     return (
                       <div className={styles.formItem} key={i} onClick={() => handleAddItem(item)}>
                         <div

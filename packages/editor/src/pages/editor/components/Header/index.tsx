@@ -29,8 +29,6 @@ import styles from './index.less';
 
 const { confirm } = Modal;
 
-const isDev = process.env.NODE_ENV === 'development';
-
 interface HeaderComponentProps {
   pointData: any;
   location: any;
@@ -38,10 +36,12 @@ interface HeaderComponentProps {
   undohandler: any;
   redohandler: any;
   importTpl: any;
+  pageConfig: any
+  setPageConfig: (values: any) => void
 }
 
 const HeaderComponent = memo((props: HeaderComponentProps) => {
-  const { pointData, location, clearData, undohandler, redohandler, importTpl } = props;
+  const { pointData, location, clearData, undohandler, redohandler, importTpl, pageConfig, setPageConfig } = props;
   const [showModalIframe, setShowModalIframe] = useState(false);
   const [showFaceModal, setShowFaceModal] = useState(false);
   const [faceUrl, setFaceUrl] = useState('');
@@ -241,13 +241,14 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
   const selector = useSelector((state: any) => state.present)
   const { editorModal, modal: { modals } } = selector
   const handleSaveFormConfirm = (values: any) => {
-    setModalSaveForm(false)
     // 去除schema中多余数据
-    const canvasComponents = editorModal.pointData.map((point: any) => point.item)
-    const modalsComponents = modals.map((modal: any) => Object.assign({}, { config: modal.config }, { components: modal.pointData }))
+    // const canvasComponents = editorModal.pointData.map((point: any) => point.item)
+    // const modalsComponents = modals.map((modal: any) => Object.assign({}, { config: modal.config }, { components: modal.pointData }))
     const { id } = props.location.query || ""
-    const params = { ...values, id, pageJson: Object.assign({}, { page: canvasComponents }, { modal: modalsComponents }) }
-    console.log(params, id)
+    const params = { ...values, id, pageJson: Object.assign({}, { page: editorModal }, { modal: modals }) }
+    console.log(values, params, id)
+    setPageConfig(values)
+    setModalSaveForm(false)
   }
 
   return (
@@ -410,7 +411,7 @@ const HeaderComponent = memo((props: HeaderComponentProps) => {
       >
         <img src={faceUrl} style={{ width: '100%' }} />
       </Modal> */}
-      <ModalSaveForm visible={modalSaveFormShow} onConfirm={handleSaveFormConfirm} onCancel={() => setModalSaveForm(false)} />
+      <ModalSaveForm visible={modalSaveFormShow} initialValues={pageConfig} onConfirm={handleSaveFormConfirm} onCancel={() => setModalSaveForm(false)} />
     </div>
   );
 });
